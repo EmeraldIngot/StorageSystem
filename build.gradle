@@ -1,0 +1,32 @@
+plugins {
+    id("java")
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = "com.emeraldingot.storagesystem"
+version = "1.0.0"
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+}
+
+dependencies {
+    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    compileOnly("org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly(files("../server/Spigot/Spigot-Server/target/spigot-1.21.4-R0.1-SNAPSHOT.jar"))
+    compileOnly(files("../server/plugins/ProtocolLib.jar"))
+    implementation 'org.xerial:sqlite-jdbc:3.47.1.0' // Ensure you use the latest version
+    implementation group: 'de.rapha149.signgui', name: 'signgui', version: '2.5.0'
+}
+shadowJar {
+    dependencies {
+        exclude(dependency("org.xerial:sqlite-jdbc:3.47.1.0"))
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
