@@ -4,6 +4,7 @@ import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.command.CashoutCommand;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
+import com.emeraldingot.storagesystem.impl.StorageCellData;
 import com.emeraldingot.storagesystem.impl.StorageSystemGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,12 +43,11 @@ public class InventoryListener implements Listener {
             return;
         }
         ItemStack infoItem = event.getView().getTopInventory().getItem(49);
-        UUID cellUUID = UUID.fromString(infoItem.getItemMeta().getLore().get(0).split("§8")[1]);
-        double x = Double.parseDouble(infoItem.getItemMeta().getLore().get(1).split("X: ")[1].split(" Y:")[0]);
-        double y = Double.parseDouble(infoItem.getItemMeta().getLore().get(1).split(" Y: ")[1].split(" Z: ")[0]);
-        double z = Double.parseDouble(infoItem.getItemMeta().getLore().get(1).split(" Z: ")[1].split(" W: ")[0]);
-        World world = Bukkit.getWorld(infoItem.getItemMeta().getLore().get(1).split(" W: ")[1]);
-        Location blockLocation = new Location(world, x, y, z);
+        StorageCellData storageCellData = StorageCellData.fromLore(infoItem.getItemMeta().getLore());
+
+        UUID cellUUID = storageCellData.getUUID();
+        Location blockLocation = storageCellData.getLocation();
+        
 
         ItemStack itemStack = event.getCurrentItem();
 
