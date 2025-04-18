@@ -2,6 +2,7 @@ package com.emeraldingot.storagesystem.event;
 
 
 import com.emeraldingot.storagesystem.impl.ControllerManager;
+import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -23,7 +24,7 @@ public class CloseInventoryListener implements Listener {
     @EventHandler
     public void onBlockDispense(InventoryCloseEvent event) throws SQLException {
 
-        if (!event.getView().getTitle().startsWith(ChatColor.RED + "Storage System")) {
+        if (!event.getView().getTitle().startsWith(Language.STORAGE_SYSTEM_TITLE)) {
             return;
         }
 
@@ -45,7 +46,7 @@ public class CloseInventoryListener implements Listener {
 
 
         ControllerManager.getInstance().recalculateUsed(blockLocation);
-
+        ControllerManager.getInstance().closeController(blockLocation);
 
 
     }

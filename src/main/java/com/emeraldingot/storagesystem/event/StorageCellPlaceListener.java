@@ -1,6 +1,7 @@
 package com.emeraldingot.storagesystem.event;
 
 
+import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -28,7 +29,7 @@ public class StorageCellPlaceListener implements Listener {
 
         List<String> lore = item.getItemMeta().getLore();
 
-        if (lore.contains(ChatColor.DARK_GRAY + "StorageSystem")) {
+        if (lore.contains(Language.STORAGE_SYSTEM_LORE_TAG)) {
             event.setCancelled(true);
             return;
         }

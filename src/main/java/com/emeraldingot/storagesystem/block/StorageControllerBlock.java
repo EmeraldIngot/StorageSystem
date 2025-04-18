@@ -1,9 +1,12 @@
 package com.emeraldingot.storagesystem.block;
 
+import com.emeraldingot.storagesystem.langauge.Language;
 import com.emeraldingot.storagesystem.util.SkullUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.network.chat.ChatHexColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Dispenser;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -74,6 +77,31 @@ public class StorageControllerBlock {
         inventory.setItem(6, null);
         inventory.setItem(7, null);
         inventory.setItem(8, null);
+    }
+
+    public static boolean isStatusPane(ItemStack itemStack) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta == null) {
+            return false;
+        }
+        if (itemMeta.getLore() == null) {
+            return false;
+        }
+        if (!(itemMeta.getLore().size() == 1)) {
+            return false;
+        }
+        if (itemMeta.getLore().get(0).equals(Language.INDICATOR_LORE)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isStorageController(Location location) {
+        if (location.getBlock().getType() != Material.DISPENSER) {
+            return false;
+        }
+        Dispenser dispenser = (Dispenser) location.getBlock().getState();
+        return dispenser.getCustomName().equals(Language.STORAGE_CONTROLLER_ITEM);
     }
 
 }

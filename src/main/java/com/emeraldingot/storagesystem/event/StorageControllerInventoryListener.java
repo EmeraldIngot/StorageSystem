@@ -4,6 +4,7 @@ import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
+import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -13,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -31,7 +33,7 @@ public class StorageControllerInventoryListener implements Listener {
 
 
         String title = event.getView().getTitle();
-        if (!title.startsWith(ChatColor.YELLOW + "Storage Controller") || !(event.getInventory() instanceof CraftInventory)) {
+        if (!title.startsWith(Language.STORAGE_CONTROLLER_ITEM) || !(event.getInventory() instanceof CraftInventory)) {
             return;
         }
 
@@ -50,6 +52,11 @@ public class StorageControllerInventoryListener implements Listener {
 
         ItemStack cursorItem = event.getCursor();
         ItemStack currentItem = event.getCurrentItem();
+
+        if (StorageControllerBlock.isStatusPane(currentItem) || StorageControllerBlock.isStatusPane(currentItem)) {
+            event.setCancelled(true);
+            return;
+        }
         // this doesn't work for hotbar swap since of the two swapped items one is valid
         if (StorageCellData.isStorageCell(currentItem) || StorageCellData.isStorageCell(cursorItem)) {
             event.setCancelled(false);
@@ -60,8 +67,6 @@ public class StorageControllerInventoryListener implements Listener {
         }
 
 
-
-            // TODO: switch these to check if it has a the UUID section and not just if it has lore
 
 //        if (event.getAction().equals(InventoryAction.PLACE_ALL) || event.getAction().equals(InventoryAction.PLACE_ONE)  || event.getAction().equals(InventoryAction.PLACE_SOME) || event.getAction().equals(InventoryAction.PLACE_ALL)) {
 //            if(event.getClickedInventory() instanceof CraftInventory && !(event.getClickedInventory() instanceof  CraftInventoryPlayer)) {
@@ -151,5 +156,24 @@ public class StorageControllerInventoryListener implements Listener {
 
     }
 
+    @EventHandler
+    public void onInventoryDrag(InventoryDragEvent event) {
+
+//        if(!event.getAction().equals(InventoryAction.PLACE_ALL) && !event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
+//            return;
+//        }
+        if (event.getInventory() instanceof CraftInventoryCrafting) {
+            return;
+        }
+
+
+        String title = event.getView().getTitle();
+        if (!title.startsWith(Language.STORAGE_CONTROLLER_ITEM) || !(event.getInventory() instanceof CraftInventory)) {
+            return;
+        }
+
+        event.setCancelled(true);
+        return;
+    }
 
 }

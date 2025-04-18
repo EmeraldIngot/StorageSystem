@@ -3,8 +3,10 @@ package com.emeraldingot.storagesystem.event;
 
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
+import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
@@ -31,13 +33,15 @@ public class StorageControllerBreakListener implements Listener {
             return;
         }
 
-        if (!((Dispenser) block.getState()).getCustomName().equals(ChatColor.YELLOW + "Storage Controller")) {
+        if (!((Dispenser) block.getState()).getCustomName().equals(Language.STORAGE_CONTROLLER_ITEM)) {
             return;
         }
 
 
         event.setDropItems(false);
-        block.getWorld().dropItemNaturally(block.getLocation(), StorageControllerBlock.getStack());
+        if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+            block.getWorld().dropItemNaturally(block.getLocation(), StorageControllerBlock.getStack());
+        }
 
         Inventory inventory = ((Dispenser) block.getState()).getInventory();
         StorageControllerBlock.clearStatusSlots(inventory);

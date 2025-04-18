@@ -33,7 +33,7 @@ public class CraftItemListener implements Listener {
                 isSameName(recipe.getResult(), StorageCell64K.getStack()) ||
                 isSameName(recipe.getResult(), StorageCell256K.getStack())
         ) {
-            System.out.println("crafted storage cell - copying disk data");
+//            System.out.println("crafted storage cell - copying disk data");
             ItemStack newCell = event.getCurrentItem();
             ItemStack oldCell = event.getInventory().getItem(5);
 

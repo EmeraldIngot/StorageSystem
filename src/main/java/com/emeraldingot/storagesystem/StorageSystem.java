@@ -1,9 +1,8 @@
 package com.emeraldingot.storagesystem;
 
 
-import com.emeraldingot.storagesystem.command.CashoutCommand;
+
 import com.emeraldingot.storagesystem.event.*;
-import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
 import com.emeraldingot.storagesystem.recipe.*;
 import com.emeraldingot.storagesystem.util.ControllerFileManager;
@@ -34,13 +33,12 @@ public class StorageSystem extends JavaPlugin {
         ControllerFileManager.getInstance().initData(this);
 
         // Events
-//        getServer().getPluginManager().registerEvents(new InventoryPickupItemListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         getServer().getPluginManager().registerEvents(new StorageCellPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerBreakListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerExplodeListener(), this);
+        getServer().getPluginManager().registerEvents(new StorageControllerEntityChangeListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerInventoryListener(), this);
         getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
         getServer().getPluginManager().registerEvents(new PrepareCraftItemsListener(), this);
@@ -50,7 +48,7 @@ public class StorageSystem extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OpenInventoryListener(), this);
 
         // Commands
-        this.getCommand("cashout").setExecutor(new CashoutCommand());
+//        this.getCommand("cashout").setExecutor(new CashoutCommand());
 //        this.getCommand("cashout").setTabCompleter(new VoucherTabCompleter());
 //        this.getCommand("voucher").setExecutor(new VoucherCommand());
 //        this.getCommand("voucher").setTabCompleter(new VoucherTabCompleter());

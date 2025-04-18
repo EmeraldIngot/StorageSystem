@@ -1,15 +1,13 @@
 package com.emeraldingot.storagesystem.event;
 
 import com.emeraldingot.storagesystem.StorageSystem;
-import com.emeraldingot.storagesystem.command.CashoutCommand;
+import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
 import com.emeraldingot.storagesystem.impl.StorageSystemGUI;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
+import com.emeraldingot.storagesystem.langauge.Language;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventoryCustom;
 import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventoryPlayer;
 import org.bukkit.entity.HumanEntity;
@@ -39,7 +37,7 @@ public class InventoryListener implements Listener {
 //        }
 
         String title = event.getView().getTitle();
-        if (!title.startsWith(ChatColor.RED + "Storage System") && !(event.getInventory() instanceof CraftInventoryCustom || event.getInventory() instanceof CraftInventoryPlayer)) {
+        if (!title.startsWith(Language.STORAGE_SYSTEM_TITLE) && !(event.getInventory() instanceof CraftInventoryCustom || event.getInventory() instanceof CraftInventoryPlayer)) {
             return;
         }
         ItemStack infoItem = event.getView().getTopInventory().getItem(49);
@@ -47,6 +45,12 @@ public class InventoryListener implements Listener {
 
         UUID cellUUID = storageCellData.getUUID();
         Location blockLocation = storageCellData.getLocation();
+
+        if (!StorageControllerBlock.isStorageController(blockLocation)) {
+            event.setCancelled(true);
+            (event.getWhoClicked()).closeInventory();
+            return;
+        }
         
 
         ItemStack itemStack = event.getCurrentItem();
@@ -55,6 +59,8 @@ public class InventoryListener implements Listener {
             event.setCancelled(true);
             return;
         }
+
+
 
         if (itemStack != null && itemStack.getItemMeta() != null && event.getSlot() >= 45) {
             int pageNumber = Integer.parseInt(event.getInventory().getItem(49).getItemMeta().getLore().get(2).split("§8")[1]);
@@ -242,14 +248,14 @@ public class InventoryListener implements Listener {
 
 
     @EventHandler
-    public void onInventoryClick(InventoryDragEvent event) throws SQLException {
+    public void onInventoryDrag(InventoryDragEvent event) throws SQLException {
 
 //        if(!event.getAction().equals(InventoryAction.PLACE_ALL) && !event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
 //            return;
 //        }
 
         String title = event.getView().getTitle();
-        if (!title.startsWith(ChatColor.RED + "Storage System")) {
+        if (!title.startsWith(Language.STORAGE_SYSTEM_TITLE)) {
             return;
         }
 
@@ -257,6 +263,7 @@ public class InventoryListener implements Listener {
             event.setCancelled(true);
             return;
         }
+
 //        System.out.println(event.getInventory());
 //
 //        for (ItemStack itemStack : event.getNewItems().values()) {
@@ -296,6 +303,6 @@ public class InventoryListener implements Listener {
     }
 
     private void updateTitle(InventoryClickEvent event, int pageNumber, int pageCount) {
-        event.getView().setTitle(ChatColor.RED + "Storage System" + " (" + (pageNumber + 1) + "/" + pageCount + ")");
+        event.getView().setTitle(Language.STORAGE_SYSTEM_TITLE + " (" + (pageNumber + 1) + "/" + pageCount + ")");
     }
 }

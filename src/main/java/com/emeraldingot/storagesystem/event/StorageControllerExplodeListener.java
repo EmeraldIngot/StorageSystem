@@ -3,6 +3,7 @@ package com.emeraldingot.storagesystem.event;
 
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
+import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,7 +23,8 @@ public class StorageControllerExplodeListener implements Listener {
     @EventHandler
     public void onBlockPlace(EntityExplodeEvent event) throws SQLException {
 
-        for (Block block : event.blockList()) {
+        for (int i = 0; i < event.blockList().size(); i++) {
+            Block block = event.blockList().get(i);
             if (block.getType() != Material.DISPENSER) {
                 continue;
             }
@@ -30,13 +32,20 @@ public class StorageControllerExplodeListener implements Listener {
                 continue;
             }
 
-            if (!((Dispenser) block.getState()).getCustomName().equals(ChatColor.YELLOW + "Storage Controller")) {
+            if (!((Dispenser) block.getState()).getCustomName().equals(Language.STORAGE_CONTROLLER_ITEM)) {
                 continue;
             }
 
             Inventory inventory = ((Dispenser) block.getState()).getInventory();
             StorageControllerBlock.clearStatusSlots(inventory);
             ControllerManager.getInstance().removeController(block.getLocation());
+            if (inventory.getItem(4) != null) {
+                block.getWorld().dropItemNaturally(block.getLocation(), inventory.getItem(4));
+            }
+            block.getWorld().dropItemNaturally(block.getLocation(), StorageControllerBlock.getStack());
+            block.setType(Material.AIR);
+            event.blockList().remove(i);
+            i--;
         }
 
 

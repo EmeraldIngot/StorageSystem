@@ -1,6 +1,7 @@
 package com.emeraldingot.storagesystem.event;
 
 
+import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -19,7 +20,7 @@ public class BlockDispenseListener implements Listener {
     public void onBlockDispense(BlockDispenseEvent event) throws SQLException {
 
         Block block = event.getBlock();
-        if (((Dispenser) block.getState()).getCustomName().equals(ChatColor.YELLOW + "Storage Controller")) {
+        if (((Dispenser) block.getState()).getCustomName().equals(Language.STORAGE_CONTROLLER_ITEM)) {
             event.setCancelled(true);
             return;
         }

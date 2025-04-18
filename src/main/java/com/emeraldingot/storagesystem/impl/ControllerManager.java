@@ -12,6 +12,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.checkerframework.checker.units.qual.A;
 
 import javax.naming.ldap.Control;
 import javax.xml.crypto.Data;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 public class ControllerManager {
     private ArrayList<Location> storageControllers = new ArrayList<>();
+    private ArrayList<Location> controllersInUse = new ArrayList<>();
 
     public ControllerManager() {
         try {
@@ -131,6 +133,9 @@ public class ControllerManager {
         double closestLocationDistance = Integer.MAX_VALUE;
 
         for (Location location : storageControllers) {
+            if (controllersInUse.contains(location)) {
+                continue;
+            }
             double distance = location.distance(playerLocation);
             if (distance < closestLocationDistance) {
                 closestLocation = location;
@@ -144,6 +149,13 @@ public class ControllerManager {
         else {
             return null;
         }
+    }
+
+    public void openController(Location location) {
+        controllersInUse.add(location);
+    }
+    public void closeController(Location location) {
+        controllersInUse.remove(location);
     }
 
     // TODO: refactor this into the database and store the locations, their current cell UUID, and capacity max and current

@@ -3,6 +3,7 @@ package com.emeraldingot.storagesystem.event;
 
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
+import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -29,7 +30,7 @@ public class StorageControllerPlaceListener implements Listener {
         }
 
 
-        if (!item.getItemMeta().getItemName().equals(ChatColor.YELLOW + "Storage Controller")) {
+        if (!item.getItemMeta().getItemName().equals(Language.STORAGE_CONTROLLER_ITEM)) {
             return;
         }
 
