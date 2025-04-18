@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class StorageCell4K {
     public static ItemStack getStack()  {
         try {
-            ItemStack storageCore = SkullUtil.createPlayerHead("http://textures.minecraft.net/texture/5c718e958e31e7fa62de6bd616d1f7eacd4a3ffeedfa27307dde372e3200fb17");
+            ItemStack storageCore = SkullUtil.createPlayerHead("http://textures.minecraft.net/texture/b7c81d15068854baafd67760f6fea9d8fb4b0a3b79e347c5159179591b85c4e7");
             ItemMeta itemMeta = storageCore.getItemMeta();
             itemMeta.setItemName(ChatColor.YELLOW + "4k Storage Cell");
             ArrayList<String> lore = new ArrayList<>();

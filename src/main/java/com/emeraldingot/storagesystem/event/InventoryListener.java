@@ -1,6 +1,5 @@
 package com.emeraldingot.storagesystem.event;
 
-import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
@@ -10,23 +9,16 @@ import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventoryCustom;
 import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventoryPlayer;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class InventoryListener implements Listener {
     @EventHandler
@@ -41,7 +33,7 @@ public class InventoryListener implements Listener {
             return;
         }
         ItemStack infoItem = event.getView().getTopInventory().getItem(49);
-        StorageCellData storageCellData = StorageCellData.fromLore(infoItem.getItemMeta().getLore());
+        StorageCellData storageCellData = StorageCellData.fromGUILore(infoItem.getItemMeta().getLore());
 
         UUID cellUUID = storageCellData.getUUID();
         Location blockLocation = storageCellData.getLocation();
@@ -114,28 +106,28 @@ public class InventoryListener implements Listener {
 
         if (event.getAction().equals(InventoryAction.PICKUP_ALL) && event.getClickedInventory() instanceof CraftInventoryCustom) {
 //            System.out.println("Removed item from storage system");
-            removeItem(event, cellUUID, blockLocation, itemStack);
+            removeItem(cellUUID, blockLocation, itemStack);
         }
 
         if (event.getAction().equals(InventoryAction.PICKUP_HALF) && event.getClickedInventory() instanceof CraftInventoryCustom) {
             ItemStack newItemStack = itemStack.clone();
             newItemStack.setAmount((itemStack.getAmount() + 1) / 2);
 //            System.out.println("Removed item from storage system");
-            removeItem(event, cellUUID, blockLocation, newItemStack);
+            removeItem(cellUUID, blockLocation, newItemStack);
         }
 
         if (event.getAction().equals(InventoryAction.PICKUP_ONE) && event.getClickedInventory() instanceof CraftInventoryCustom) {
             ItemStack newItemStack = itemStack.clone();
             newItemStack.setAmount(1);
 //            System.out.println("Removed item from storage system");
-            removeItem(event, cellUUID, blockLocation, newItemStack);
+            removeItem(cellUUID, blockLocation, newItemStack);
         }
 
 //        System.out.println(event.getAction());
 
         if (event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && event.getClickedInventory() instanceof CraftInventoryCustom) {
 //            System.out.println("Removed item from storage system");
-            removeItem(event, cellUUID, blockLocation, itemStack);
+            removeItem(cellUUID, blockLocation, itemStack);
 
         }
 
@@ -147,7 +139,7 @@ public class InventoryListener implements Listener {
             }
 //            System.out.println("Added item to storage system");
 
-            addItem(event, cellUUID, blockLocation, itemStack);
+            addItem(cellUUID, blockLocation, itemStack);
 
         }
 
@@ -160,7 +152,7 @@ public class InventoryListener implements Listener {
                 return;
             }
 //            System.out.println("Added item to storage system");
-            addItem(event, cellUUID, blockLocation, newItemStack);
+            addItem(cellUUID, blockLocation, newItemStack);
 
 
         }
@@ -186,7 +178,7 @@ public class InventoryListener implements Listener {
                 return;
             }
 //            System.out.println("Added item to storage system");
-            addItem(event, cellUUID, blockLocation, itemStack);
+            addItem(cellUUID, blockLocation, itemStack);
 
             // This is in case they shift clicked the item when they are on a full page
             if (event.getInventory().firstEmpty() == -1) {
@@ -213,24 +205,24 @@ public class InventoryListener implements Listener {
         if (event.getAction().equals(InventoryAction.SWAP_WITH_CURSOR) && event.getClickedInventory() instanceof CraftInventoryCustom) {
             // try taking old item stack
 //            System.out.println("Removing item from storage system");
-            removeItem(event, cellUUID, blockLocation, event.getCurrentItem());
+            removeItem(cellUUID, blockLocation, event.getCurrentItem());
 
             if (!ControllerManager.getInstance().canHold(blockLocation, event.getCursor())) {
                 // if you can't put down the new one, add original item back
-                addItem(event, cellUUID, blockLocation, event.getCurrentItem());
+                addItem(cellUUID, blockLocation, event.getCurrentItem());
                 event.setCancelled(true);
                 return;
             }
 
 //            System.out.println("Added item to storage system");
-            addItem(event, cellUUID, blockLocation, event.getCursor());
+            addItem(cellUUID, blockLocation, event.getCursor());
 
 //            addItem(itemStack);
         }
 
 //        if (event.getAction().equals(InventoryAction.DROP_ALL_SLOT)) {
 ////            System.out.println("Removing item from storage system");
-//            removeItem(event, cellUUID, blockLocation, event.getCurrentItem());
+//            removeItem(cellUUID, blockLocation, event.getCurrentItem());
 //        }
 
 
@@ -286,12 +278,12 @@ public class InventoryListener implements Listener {
 
     }
 
-    private void addItem(InventoryClickEvent event, UUID uuid, Location location, ItemStack itemStack) throws SQLException {
+    public static void addItem(UUID uuid, Location location, ItemStack itemStack) throws SQLException {
         DatabaseManager.getInstance().addItemsToCell(uuid, itemStack);
         ControllerManager.getInstance().changeUsed(location, itemStack, false);
     }
 
-    private void removeItem(InventoryClickEvent event, UUID uuid, Location location, ItemStack itemStack) throws SQLException {
+    private void removeItem(UUID uuid, Location location, ItemStack itemStack) throws SQLException {
 
         DatabaseManager.getInstance().removeItemsFromCell(uuid, itemStack);
         ControllerManager.getInstance().changeUsed(location, itemStack, true);

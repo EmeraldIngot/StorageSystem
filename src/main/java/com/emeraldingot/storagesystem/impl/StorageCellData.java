@@ -30,13 +30,19 @@ public class StorageCellData {
         }
     }
 
-    public static StorageCellData fromLore(List<String> lore) {
+    public static StorageCellData fromGUILore(List<String> lore) {
         UUID cellUUID = UUID.fromString(lore.get(0).split("§8")[1]);
         double x = Double.parseDouble(lore.get(1).split("X: ")[1].split(" Y:")[0]);
         double y = Double.parseDouble(lore.get(1).split(" Y: ")[1].split(" Z: ")[0]);
         double z = Double.parseDouble(lore.get(1).split(" Z: ")[1].split(" W: ")[0]);
         World world = Bukkit.getWorld(lore.get(1).split(" W: ")[1]);
         Location blockLocation = new Location(world, x, y, z);
+        return new StorageCellData(cellUUID, blockLocation);
+    }
+
+    public static StorageCellData fromItemLore(List<String> lore) {
+        UUID cellUUID = UUID.fromString(lore.get(1).split("§fCell ID: ")[1]);
+        Location blockLocation = null;
         return new StorageCellData(cellUUID, blockLocation);
     }
 

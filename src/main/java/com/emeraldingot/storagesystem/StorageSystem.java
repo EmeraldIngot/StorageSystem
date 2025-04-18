@@ -8,6 +8,7 @@ import com.emeraldingot.storagesystem.recipe.*;
 import com.emeraldingot.storagesystem.util.ControllerFileManager;
 import org.bukkit.*;
 import org.bukkit.entity.*;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.net.MalformedURLException;
@@ -34,6 +35,7 @@ public class StorageSystem extends JavaPlugin {
 
         // Events
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryMoveItemListener(), this);
         getServer().getPluginManager().registerEvents(new StorageCellPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerBreakListener(), this);
