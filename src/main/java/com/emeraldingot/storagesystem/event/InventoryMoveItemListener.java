@@ -31,10 +31,15 @@ public class InventoryMoveItemListener implements Listener {
                 Container container = (Container) state;
                 if (container.getCustomName() != null && container.getCustomName().equals(Language.STORAGE_CONTROLLER_ITEM)) {
                     ItemStack storageCell = event.getDestination().getItem(4);
+
+                    if (storageCell == null) {
+                        event.setCancelled(true);
+                        return;
+                    }
+
                     StorageCellData storageCellData = StorageCellData.fromItemLore(storageCell.getItemMeta().getLore());
 
                     UUID cellUUID = storageCellData.getUUID();
-
                     if (StorageCellData.isStorageCell(event.getItem())) {
                         event.setCancelled(true);
                         return;
