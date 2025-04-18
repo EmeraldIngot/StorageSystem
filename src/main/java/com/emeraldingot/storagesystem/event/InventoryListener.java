@@ -51,7 +51,7 @@ public class InventoryListener implements Listener {
 
         ItemStack itemStack = event.getCurrentItem();
 
-        if (itemStack != null && itemStack.getItemMeta().getLore() != null && itemStack.getItemMeta().getLore().get(1).contains("Cell ID")) {
+        if (StorageCellData.isStorageCell(itemStack)) {
             event.setCancelled(true);
             return;
         }
@@ -222,10 +222,10 @@ public class InventoryListener implements Listener {
 //            addItem(itemStack);
         }
 
-        if (event.getAction().equals(InventoryAction.DROP_ALL_SLOT)) {
-//            System.out.println("Removing item from storage system");
-            removeItem(event, cellUUID, blockLocation, event.getCurrentItem());
-        }
+//        if (event.getAction().equals(InventoryAction.DROP_ALL_SLOT)) {
+////            System.out.println("Removing item from storage system");
+//            removeItem(event, cellUUID, blockLocation, event.getCurrentItem());
+//        }
 
 
 

@@ -5,7 +5,11 @@ import com.emeraldingot.storagesystem.impl.DatabaseManager;
 import de.rapha149.signgui.SignGUI;
 import de.rapha149.signgui.SignGUIAction;
 import de.rapha149.signgui.exception.SignGUIVersionException;
+import net.minecraft.world.level.block.BlockChest;
 import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.block.Container;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,12 +25,40 @@ import java.sql.Array;
 import java.sql.SQLException;
 import java.util.*;
 
+
 public class CashoutCommand implements CommandExecutor {
 
-
+    private boolean isCheck = false;
+    private List<ItemStack> lastItems;
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+        Block chest = Bukkit.getWorld("world").getBlockAt(new Location(Bukkit.getWorld("world"), -25, 72, -153));
+        ItemStack[] chestContents = ((Chest) chest.getState()).getInventory().getContents();
+        List<ItemStack> contentsList = new ArrayList<>(Arrays.asList(chestContents));
+        for (int i = 0; i < contentsList.size(); i++) {
+            if (contentsList.get(i) == null) {
+                contentsList.remove(i);
+                i--;
+            }
+        }
+        contentsList.sort(Comparator.comparing(ItemStack::toString));
+        if (isCheck) {
+            ArrayList<ItemStack> addedItems = new ArrayList<>(contentsList);
+            addedItems.removeAll(lastItems);
+
+            ArrayList<ItemStack> removedItems = new ArrayList<>(contentsList);
+            addedItems.removeAll(lastItems);
+        }
+        lastItems = contentsList;
+
+        for (ItemStack itemStack : contentsList) {
+            if (itemStack == null) {
+                continue;
+            }
+            commandSender.sendMessage(itemStack.toString());
+        }
+        isCheck = !isCheck;
 //        Player player = (Player) commandSender;
 ////
 //        try {

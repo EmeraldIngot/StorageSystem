@@ -1,6 +1,7 @@
 package com.emeraldingot.storagesystem;
 
 
+import com.emeraldingot.storagesystem.command.CashoutCommand;
 import com.emeraldingot.storagesystem.event.*;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
@@ -49,8 +50,8 @@ public class StorageSystem extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OpenInventoryListener(), this);
 
         // Commands
-//        this.getCommand("casino").setExecutor(new CasinoCommand());
-//        this.getCommand("casino").setTabCompleter(new CasinoTabCompleter());
+        this.getCommand("cashout").setExecutor(new CashoutCommand());
+//        this.getCommand("cashout").setTabCompleter(new VoucherTabCompleter());
 //        this.getCommand("voucher").setExecutor(new VoucherCommand());
 //        this.getCommand("voucher").setTabCompleter(new VoucherTabCompleter());
 
