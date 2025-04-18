@@ -9,5 +9,5 @@ If you find any problems at all, please open an issue so that I can fix them.
 
 # Help
 
-Need information or recipes? Read the [documentation](docs/storage_system.md)
+Need information or recipes? Read the [documentation](https://github.com/EmeraldIngot/StorageSystem/wiki)
 
