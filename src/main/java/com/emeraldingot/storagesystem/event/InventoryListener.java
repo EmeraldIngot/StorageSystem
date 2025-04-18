@@ -7,6 +7,7 @@ import com.emeraldingot.storagesystem.impl.StorageCellData;
 import com.emeraldingot.storagesystem.impl.StorageSystemGUI;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.*;
+import org.bukkit.block.Dispenser;
 import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventoryCustom;
 import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventoryPlayer;
 import org.bukkit.entity.Player;
@@ -39,6 +40,14 @@ public class InventoryListener implements Listener {
         Location blockLocation = storageCellData.getLocation();
 
         if (!StorageControllerBlock.isStorageController(blockLocation)) {
+            event.setCancelled(true);
+            (event.getWhoClicked()).closeInventory();
+            return;
+        }
+
+        Dispenser dispenser = (Dispenser) blockLocation.getBlock().getState();
+        ItemStack cell = dispenser.getInventory().getItem(4);
+        if (cell == null || cell.getType() != Material.PLAYER_HEAD) {
             event.setCancelled(true);
             (event.getWhoClicked()).closeInventory();
             return;
