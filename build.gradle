@@ -26,6 +26,7 @@ shadowJar {
     dependencies {
         exclude(dependency("org.xerial:sqlite-jdbc:3.47.1.0"))
     }
+    exclude 'META-INF/maven/**'
 }
 
 tasks.test {
