@@ -5,7 +5,7 @@ A Minecraft plugin that implements a simple storage system inspired by [Deep Sto
 # Bugs
 I have tested this plugin for duplication glitches, item loss bugs, and other issues as much as I could, but there are no doubt edge cases that I forgot.
 
-If you find any problems at all, please open an issue so that I can fix it.
+If you find any problems at all, please open an issue so that I can fix them.
 
 # Help
 
