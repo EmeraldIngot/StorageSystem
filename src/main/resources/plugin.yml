@@ -2,10 +2,3 @@ name : 'StorageSystem'
 version: '1.0.0'
 api-version: '1.21.1'
 main: com.emeraldingot.storagesystem.StorageSystem
-commands:
-  gamble:
-    description: "Gamble command"
-    usage: /<command>
-  cashout:
-    description: "Cashout command"
-    usage: /<command>
