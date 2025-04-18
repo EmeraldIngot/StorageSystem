@@ -37,11 +37,14 @@ The storage terminal is used to access the cell's contents once it is loaded int
 - You can search for items by material name (currently by custom item name)
 
 # Planned Features
-- Connecting the storage controller to hoppers
+- Removing items from the storage controller with hoppers and filters
+- Transferring items faster than traditional vanilla hoppers can
 - QOL fixes related to the Storage Terminal GUI
+    - disabling page buttons when a "next page" is not available
+    - indicating that the current screen is the result of a search
 - Utility commands to list cell UUIDs in the database and create a storage cell from them (for admins to restore lost storage cells)
 
 # Technical Information
 - On the backend, StorageSystem uses an SQLite database to store items
 - When first put into a controller, a storage cell is assigned a random UUID
-- This UUID is stored in the database along with each item "in" the cell of that UUID
+- This UUID is stored in the database along with each item "in" the cell
