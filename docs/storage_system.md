@@ -42,6 +42,6 @@ The storage terminal is used to access the cell's contents once it is loaded int
 - Utility commands to list cell UUIDs in the database and create a storage cell from them (for admins to restore lost storage cells)
 
 # Technical Information
-- On the backend, StorageSystem uses SQLite database to store items
+- On the backend, StorageSystem uses an SQLite database to store items
 - When first put into a controller, a storage cell is assigned a random UUID
 - This UUID is stored in the database along with each item "in" the cell of that UUID

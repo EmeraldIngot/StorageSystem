@@ -18,7 +18,6 @@
 | Diamond  | 2 |
 | Redstone | 1 |
 
-
 ## Information
 Used to craft the 1k Storage Cell and the Storage Controller
 

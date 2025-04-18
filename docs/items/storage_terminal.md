@@ -17,6 +17,7 @@
 | Redstone | 3 |
 | Iron Ingot | 2 |
 | Ender Pearl | 1 |
+
 ## Information
 Used to access the nearest online [Storage Controller](storage_controller.md) that is not in use
 

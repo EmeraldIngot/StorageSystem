@@ -16,7 +16,7 @@
 | Dragon's Breath | 4 |
 | Shulker Shell | 2 |
 | Netherite Block | 2 |
-| 64k Storage Cell | 1 |
+| [64k Storage Cell](64k_storage_cell.md) | 1 |
 
 **Total Raw Materials:**
 

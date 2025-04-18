@@ -18,7 +18,7 @@
 | Iron Block | 2 |
 | Redstone | 1 |
 | Gold Ingot | 1 |
-| Storage Core | 1 |
+| [Storage Core](storage_core.md) | 1 |
 
 **Total Raw Materials:**
 

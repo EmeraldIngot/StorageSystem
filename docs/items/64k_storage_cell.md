@@ -16,7 +16,7 @@
 | Netherite Ingot | 4 |
 | Diamond Block | 2 |
 | Eye of Ender | 2 |
-| 16k Storage Cell | 1 |
+| [16k Storage Cell](16k_storage_cell.md) | 1 |
 
 **Total Raw Materials:**
 

@@ -16,7 +16,7 @@
 | Emerald Block | 4 |
 | Gold Block | 2 |
 | Redstone Block | 2 |
-| 4k Storage Cell | 1 |
+| [4k Storage Cell](4k_storage_cell.md) | 1 |
 
 **Total Raw Materials:**
 
