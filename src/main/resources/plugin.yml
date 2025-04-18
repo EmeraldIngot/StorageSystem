@@ -2,3 +2,7 @@ name : 'StorageSystem'
 version: '1.0.0'
 api-version: '1.21.4'
 main: com.emeraldingot.storagesystem.StorageSystem
+commands:
+  storagesystem:
+    description: "StorageSystem command"
+    usage: /<command> <argument>

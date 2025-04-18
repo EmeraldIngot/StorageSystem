@@ -1,6 +1,7 @@
 package com.emeraldingot.storagesystem.impl;
 
 import com.emeraldingot.storagesystem.StorageSystem;
+import com.emeraldingot.storagesystem.langauge.Language;
 import com.emeraldingot.storagesystem.util.SkullUtil;
 import de.rapha149.signgui.SignGUI;
 import de.rapha149.signgui.SignGUIAction;
@@ -111,7 +112,7 @@ public class StorageSystemGUI {
 
     private static Inventory getStoragePage(UUID uuid, Location location, ArrayList<ItemStack> itemStacks, int pageNumber) {
         int pageCount = getPageCount(itemStacks);
-        Inventory inventory = Bukkit.createInventory(null , 9 * 6, ChatColor.RED + "Storage System" + " (" + (pageNumber + 1) + "/" + pageCount + ")");
+        Inventory inventory = Bukkit.createInventory(null , 9 * 6, Language.STORAGE_SYSTEM_TITLE + " (" + (pageNumber + 1) + "/" + pageCount + ")");
 
         ItemStack previousPageItem;
         try {

@@ -30,9 +30,40 @@ public class InventoryListener implements Listener {
 //        }
 
         String title = event.getView().getTitle();
-        if (!title.startsWith(Language.STORAGE_SYSTEM_TITLE) && !(event.getInventory() instanceof CraftInventoryCustom || event.getInventory() instanceof CraftInventoryPlayer)) {
+
+
+        // don't have to return here since the next if statement will
+        if (title.equals(Language.STORAGE_SYSTEM_ITEMS_TITLE)) {
+            if (event.getClickedInventory() instanceof CraftInventoryCustom) {
+                event.setCancelled(true);
+            }
+            if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY || event.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD) {
+                event.setCancelled(true);
+            }
+            if (event.getAction() == InventoryAction.COLLECT_TO_CURSOR) {
+                event.setCancelled(true);
+            }
+
+            if (event.getClickedInventory() instanceof CraftInventoryCustom) {
+                if (event.getAction() == InventoryAction.CLONE_STACK) {
+                    ItemStack itemStack = event.getCurrentItem().clone();
+                    itemStack.setAmount(64);
+                    event.getWhoClicked().setItemOnCursor(itemStack);
+                }
+                if (event.getAction() == InventoryAction.PICKUP_ALL){
+                    event.getWhoClicked().setItemOnCursor(event.getCurrentItem());
+                }
+            }
+
+
+        }
+
+
+        if (!title.startsWith(Language.STORAGE_SYSTEM_TITLE) || !(event.getInventory() instanceof CraftInventoryCustom || event.getInventory() instanceof CraftInventoryPlayer)) {
             return;
         }
+
+
         ItemStack infoItem = event.getView().getTopInventory().getItem(49);
         StorageCellData storageCellData = StorageCellData.fromGUILore(infoItem.getItemMeta().getLore());
 
@@ -256,14 +287,24 @@ public class InventoryListener implements Listener {
 //        }
 
         String title = event.getView().getTitle();
-        if (!title.startsWith(Language.STORAGE_SYSTEM_TITLE)) {
-            return;
-        }
 
-        if (event.getInventory() instanceof CraftInventoryCustom) {
+        if (title.equals(Language.STORAGE_SYSTEM_ITEMS_TITLE)) {
             event.setCancelled(true);
             return;
         }
+
+
+        if (title.startsWith(Language.STORAGE_SYSTEM_TITLE)) {
+            event.setCancelled(true);
+            return;
+        }
+
+
+
+//        if (event.getInventory() instanceof CraftInventoryCustom) {
+//            event.setCancelled(true);
+//            return;
+//        }
 
 //        System.out.println(event.getInventory());
 //
@@ -281,9 +322,7 @@ public class InventoryListener implements Listener {
 //        System.out.println(event.getInventory());
 //        System.out.println(event.getClickedInventory());
 
-
-
-        event.setCancelled(false);
+        return;
 
     }
 

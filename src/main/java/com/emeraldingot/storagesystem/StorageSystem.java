@@ -2,6 +2,8 @@ package com.emeraldingot.storagesystem;
 
 
 
+import com.emeraldingot.storagesystem.command.StorageSystemCommand;
+import com.emeraldingot.storagesystem.command.tabcompleter.StorageSystemTabCompleter;
 import com.emeraldingot.storagesystem.event.*;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
 import com.emeraldingot.storagesystem.recipe.*;
@@ -48,14 +50,13 @@ public class StorageSystem extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PrepareCraftItemsListener(), this);
         getServer().getPluginManager().registerEvents(new BlockDispenseListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new CloseInventoryListener(), this);
         getServer().getPluginManager().registerEvents(new OpenInventoryListener(), this);
 
         // Commands
-//        this.getCommand("cashout").setExecutor(new CashoutCommand());
-//        this.getCommand("cashout").setTabCompleter(new VoucherTabCompleter());
-//        this.getCommand("voucher").setExecutor(new VoucherCommand());
-//        this.getCommand("voucher").setTabCompleter(new VoucherTabCompleter());
+        this.getCommand("storagesystem").setExecutor(new StorageSystemCommand());
+        this.getCommand("storagesystem").setTabCompleter(new StorageSystemTabCompleter());
 
         // Recipes
         try {
