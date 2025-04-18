@@ -18,8 +18,8 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT")
 //    compileOnly(files("../server/Spigot/Spigot-Server/target/spigot-1.21.5-R0.1-SNAPSHOT.jar"))
     compileOnly(files("../server/plugins/ProtocolLib.jar"))
-    implementation 'org.spigotmc:spigot:1.21.4-R0.1-SNAPSHOT:remapped-mojang'
-    implementation 'org.xerial:sqlite-jdbc:3.47.1.0' // Ensure you use the latest version
+    compileOnly 'org.spigotmc:spigot:1.21.4-R0.1-SNAPSHOT:remapped-mojang'
+    implementation 'org.xerial:sqlite-jdbc:3.47.1.0'
     implementation group: 'de.rapha149.signgui', name: 'signgui', version: '2.5.0'
 }
 shadowJar {
