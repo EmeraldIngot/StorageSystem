@@ -8,8 +8,7 @@ import com.emeraldingot.storagesystem.impl.StorageSystemGUI;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.*;
 import org.bukkit.block.Dispenser;
-import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventoryCustom;
-import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventoryPlayer;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +16,7 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.sql.SQLException;
 import java.util.UUID;
@@ -34,7 +34,7 @@ public class InventoryListener implements Listener {
 
         // don't have to return here since the next if statement will
         if (title.equals(Language.STORAGE_SYSTEM_ITEMS_TITLE)) {
-            if (event.getClickedInventory() instanceof CraftInventoryCustom) {
+            if (!(event.getClickedInventory() instanceof PlayerInventory)) {
                 event.setCancelled(true);
             }
             if (event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY || event.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD) {
@@ -44,7 +44,7 @@ public class InventoryListener implements Listener {
                 event.setCancelled(true);
             }
 
-            if (event.getClickedInventory() instanceof CraftInventoryCustom) {
+            if (!(event.getClickedInventory() instanceof PlayerInventory)) {
                 if (event.getAction() == InventoryAction.CLONE_STACK) {
                     ItemStack itemStack = event.getCurrentItem().clone();
                     itemStack.setAmount(64);
@@ -59,7 +59,7 @@ public class InventoryListener implements Listener {
         }
 
 
-        if (!title.startsWith(Language.STORAGE_SYSTEM_TITLE) || !(event.getInventory() instanceof CraftInventoryCustom || event.getInventory() instanceof CraftInventoryPlayer)) {
+        if (!title.startsWith(Language.STORAGE_SYSTEM_TITLE)) {
             return;
         }
 
@@ -70,11 +70,11 @@ public class InventoryListener implements Listener {
         UUID cellUUID = storageCellData.getUUID();
         Location blockLocation = storageCellData.getLocation();
 
-        if (!StorageControllerBlock.isStorageController(blockLocation)) {
-            event.setCancelled(true);
-            (event.getWhoClicked()).closeInventory();
-            return;
-        }
+//        if (!StorageControllerBlock.isStorageController(blockLocation)) {
+//            event.setCancelled(true);
+//            (event.getWhoClicked()).closeInventory();
+//            return;
+//        }
 
         Dispenser dispenser = (Dispenser) blockLocation.getBlock().getState();
         ItemStack cell = dispenser.getInventory().getItem(4);
@@ -83,7 +83,7 @@ public class InventoryListener implements Listener {
             (event.getWhoClicked()).closeInventory();
             return;
         }
-        
+
 
         ItemStack itemStack = event.getCurrentItem();
 
@@ -144,19 +144,19 @@ public class InventoryListener implements Listener {
             return;
         }
 
-        if (event.getAction().equals(InventoryAction.PICKUP_ALL) && event.getClickedInventory() instanceof CraftInventoryCustom) {
+        if (event.getAction().equals(InventoryAction.PICKUP_ALL) && !(event.getClickedInventory() instanceof PlayerInventory)) {
 //            System.out.println("Removed item from storage system");
             removeItem(cellUUID, blockLocation, itemStack);
         }
 
-        if (event.getAction().equals(InventoryAction.PICKUP_HALF) && event.getClickedInventory() instanceof CraftInventoryCustom) {
+        if (event.getAction().equals(InventoryAction.PICKUP_HALF) && !(event.getClickedInventory() instanceof PlayerInventory)) {
             ItemStack newItemStack = itemStack.clone();
             newItemStack.setAmount((itemStack.getAmount() + 1) / 2);
 //            System.out.println("Removed item from storage system");
             removeItem(cellUUID, blockLocation, newItemStack);
         }
 
-        if (event.getAction().equals(InventoryAction.PICKUP_ONE) && event.getClickedInventory() instanceof CraftInventoryCustom) {
+        if (event.getAction().equals(InventoryAction.PICKUP_ONE) && !(event.getClickedInventory() instanceof PlayerInventory)) {
             ItemStack newItemStack = itemStack.clone();
             newItemStack.setAmount(1);
 //            System.out.println("Removed item from storage system");
@@ -165,13 +165,13 @@ public class InventoryListener implements Listener {
 
 //        System.out.println(event.getAction());
 
-        if (event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && event.getClickedInventory() instanceof CraftInventoryCustom) {
+        if (event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && !(event.getClickedInventory() instanceof PlayerInventory)) {
 //            System.out.println("Removed item from storage system");
             removeItem(cellUUID, blockLocation, itemStack);
 
         }
 
-        if (event.getAction().equals(InventoryAction.PLACE_ALL) && event.getClickedInventory() instanceof CraftInventoryCustom) {
+        if (event.getAction().equals(InventoryAction.PLACE_ALL) && !(event.getClickedInventory() instanceof PlayerInventory)) {
             itemStack = event.getCursor();
             if (!ControllerManager.getInstance().canHold(blockLocation, itemStack)) {
                 event.setCancelled(true);
@@ -183,7 +183,7 @@ public class InventoryListener implements Listener {
 
         }
 
-        if (event.getAction().equals(InventoryAction.PLACE_ONE) && event.getClickedInventory() instanceof CraftInventoryCustom) {
+        if (event.getAction().equals(InventoryAction.PLACE_ONE) && !(event.getClickedInventory() instanceof PlayerInventory)) {
             itemStack = event.getCursor();
             ItemStack newItemStack = itemStack.clone();
             newItemStack.setAmount(1);
@@ -207,12 +207,12 @@ public class InventoryListener implements Listener {
             return;
         }
 
-        if (event.getAction().equals(InventoryAction.DROP_ALL_SLOT) && event.getClickedInventory() instanceof CraftInventoryCustom) {
+        if ((event.getAction().equals(InventoryAction.DROP_ALL_SLOT) || event.getAction().equals(InventoryAction.DROP_ONE_SLOT)) && !(event.getClickedInventory() instanceof PlayerInventory)) {
             event.setCancelled(true);
             return;
         }
 
-        if (event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && event.getClickedInventory() instanceof CraftInventoryPlayer) {
+        if (event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY) && event.getClickedInventory() instanceof PlayerInventory) {
             if (!ControllerManager.getInstance().canHold(blockLocation, itemStack)) {
                 event.setCancelled(true);
                 return;
@@ -242,7 +242,7 @@ public class InventoryListener implements Listener {
 //
         }
 
-        if (event.getAction().equals(InventoryAction.SWAP_WITH_CURSOR) && event.getClickedInventory() instanceof CraftInventoryCustom) {
+        if (event.getAction().equals(InventoryAction.SWAP_WITH_CURSOR) && !(event.getClickedInventory() instanceof PlayerInventory)) {
             // try taking old item stack
 //            System.out.println("Removing item from storage system");
             removeItem(cellUUID, blockLocation, event.getCurrentItem());

@@ -4,7 +4,6 @@ import com.emeraldingot.storagesystem.StorageSystem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Container;
-import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftItemMetas;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;

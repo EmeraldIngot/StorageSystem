@@ -8,8 +8,7 @@ import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventory;
-import org.bukkit.craftbukkit.v1_21_R3.inventory.CraftInventoryCrafting;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
@@ -27,13 +26,13 @@ public class StorageControllerInventoryListener implements Listener {
 //        if(!event.getAction().equals(InventoryAction.PLACE_ALL) && !event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
 //            return;
 //        }
-        if (event.getInventory() instanceof CraftInventoryCrafting) {
-            return;
-        }
+//        if (event.getInventory() instanceof CraftInventoryCrafting) {
+//            return;
+//        }
 
 
         String title = event.getView().getTitle();
-        if (!title.startsWith(Language.STORAGE_CONTROLLER_ITEM) || !(event.getInventory() instanceof CraftInventory)) {
+        if (!title.startsWith(Language.STORAGE_CONTROLLER_ITEM)) {
             return;
         }
 
@@ -162,13 +161,13 @@ public class StorageControllerInventoryListener implements Listener {
 //        if(!event.getAction().equals(InventoryAction.PLACE_ALL) && !event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
 //            return;
 //        }
-        if (event.getInventory() instanceof CraftInventoryCrafting) {
-            return;
-        }
+//        if (event.getInventory() instanceof CraftInventoryCrafting) {
+//            return;
+//        }
 
 
         String title = event.getView().getTitle();
-        if (!title.startsWith(Language.STORAGE_CONTROLLER_ITEM) || !(event.getInventory() instanceof CraftInventory)) {
+        if (!title.startsWith(Language.STORAGE_CONTROLLER_ITEM)) {
             return;
         }
 
