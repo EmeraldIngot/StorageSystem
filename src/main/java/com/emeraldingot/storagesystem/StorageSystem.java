@@ -47,7 +47,7 @@ public class StorageSystem extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryMoveItemListener(), this);
         getServer().getPluginManager().registerEvents(new PistonExtendListener(), this);
-        getServer().getPluginManager().registerEvents(new StorageCellPlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new StorageItemPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerBreakListener(), this);
         getServer().getPluginManager().registerEvents(new StorageControllerExplodeListener(), this);

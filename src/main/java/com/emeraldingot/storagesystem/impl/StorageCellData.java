@@ -25,19 +25,7 @@ public class StorageCellData {
     }
 
     // TODO: Move this to StorageCell and check persistent data instead of lore
-    public static boolean isStorageCell(ItemStack itemStack) {
-        if (itemStack == null) {
-            return false;
-        }
-        ItemMeta itemMeta = itemStack.getItemMeta();
 
-        if (itemMeta != null && itemMeta.getLore() != null && itemMeta.getLore().size() > 1 && itemMeta.getLore().get(1).contains("Cell ID")) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
 
     public static StorageCellData fromGUILore(List<String> lore) {
         UUID cellUUID = UUID.fromString(lore.get(0).split("§8")[1]);

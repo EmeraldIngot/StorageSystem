@@ -122,6 +122,7 @@ public class DatabaseManager {
 
     public void removeItemsFromCell(UUID uuid, ItemStack itemStack) {
         String material = itemStack.getType().toString();  // Get material (e.g., "OAK_LOG")
+
         String itemMeta = toBase64(itemStack.getItemMeta());  // Get serialized metadata (can be empty or null)
         int amountToRemove = itemStack.getAmount();  // Get the amount to remove
 

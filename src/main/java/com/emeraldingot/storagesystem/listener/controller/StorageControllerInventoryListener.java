@@ -4,6 +4,7 @@ import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
+import com.emeraldingot.storagesystem.item.StorageCell;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -55,7 +56,7 @@ public class StorageControllerInventoryListener implements Listener {
             return;
         }
         // this doesn't work for hotbar swap since of the two swapped items one is valid
-        if (StorageCellData.isStorageCell(currentItem) || StorageCellData.isStorageCell(cursorItem)) {
+        if (StorageCell.isStorageCell(currentItem) || StorageCell.isStorageCell(cursorItem)) {
             event.setCancelled(false);
         }
         else {

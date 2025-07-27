@@ -3,7 +3,7 @@ package com.emeraldingot.storagesystem.langauge;
 import org.bukkit.ChatColor;
 
 public class Language {
-    public static final String INDICATOR_LORE = ChatColor.GRAY + "Indicator";
+    public static final String INDICATOR_LORE = ChatColor.DARK_GRAY + "Indicator";
     public static final String SEARCH_ITEMS = ChatColor.RED + "Search";
     public static final String BACK_BUTTON = ChatColor.RED + "Back";
     public static final String STORAGE_CONTROLLER_ITEM = ChatColor.YELLOW + "Storage Controller";

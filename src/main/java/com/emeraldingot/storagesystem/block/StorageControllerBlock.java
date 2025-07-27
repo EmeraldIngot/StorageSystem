@@ -2,7 +2,6 @@ package com.emeraldingot.storagesystem.block;
 
 import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.langauge.Language;
-import com.emeraldingot.storagesystem.util.SkullUtil;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Location;
@@ -15,6 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StorageControllerBlock {
 
@@ -45,7 +45,7 @@ public class StorageControllerBlock {
         ItemMeta indicatorMeta = indicator.getItemMeta();
         indicatorMeta.setItemName(ChatColor.RED + "OFFLINE");
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(ChatColor.DARK_GRAY + "Indicator");
+        lore.add(Language.INDICATOR_LORE);
         indicatorMeta.setLore(lore);
         indicator.setItemMeta(indicatorMeta);
 
@@ -104,17 +104,75 @@ public class StorageControllerBlock {
         }
         Dispenser dispenser = (Dispenser) location.getBlock().getState();
 
+        if (isLegacyBlock(dispenser.getInventory())) {
+            dispenser.getPersistentDataContainer().set(CONTROLLER_KEY, PersistentDataType.BYTE, (byte) 0);
+        }
+
         return dispenser.getPersistentDataContainer().has(CONTROLLER_KEY);
     }
 
-    public static boolean isStorageController(ItemStack itemStack) {
+    public static boolean isStorageControllerItem(ItemStack itemStack) {
         if (itemStack.getItemMeta() == null) {
             return false;
         }
 
+        if (itemStack.getItemMeta().getPersistentDataContainer().has(CONTROLLER_KEY)) {
+            return true;
+        }
 
+        if (isLegacy(itemStack)) {
+            migrateLegacy(itemStack);
+            return true;
+        }
 
-        return itemStack.getItemMeta().getPersistentDataContainer().has(CONTROLLER_KEY);
+        return false;
+
+    }
+
+    public static boolean isLegacyBlock(Inventory inventory) {
+
+        ItemStack spacer = inventory.getItem(0);
+        if (spacer.getItemMeta() == null) {
+            return false;
+        }
+
+        ItemMeta itemMeta = spacer.getItemMeta();
+        if (itemMeta.getLore() == null) {
+            return false;
+        }
+
+        List<String> lore = itemMeta.getLore();
+
+        if (lore.isEmpty()) {
+            return false;
+        }
+
+        return lore.get(0).equals(Language.INDICATOR_LORE);
+    }
+
+    public static boolean isLegacy(ItemStack itemStack) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if (itemMeta.getLore() == null) {
+            return false;
+        }
+
+        List<String> lore = itemMeta.getLore();
+        if (!lore.contains(Language.STORAGE_SYSTEM_LORE_TAG)) {
+            return false;
+        }
+
+        if (!itemMeta.getItemName().equals(Language.STORAGE_CONTROLLER_ITEM)) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+    public static void migrateLegacy(ItemStack itemStack) {
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        itemMeta.getPersistentDataContainer().set(CONTROLLER_KEY, PersistentDataType.BYTE, (byte) 0);
+        itemStack.setItemMeta(itemMeta);
     }
 
 }

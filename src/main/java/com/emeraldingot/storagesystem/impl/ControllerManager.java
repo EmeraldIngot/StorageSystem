@@ -86,6 +86,11 @@ public class ControllerManager {
             return null;
         }
 
+        // This should only run if the cell is legacy and needs migrated
+        if (!StorageCell.isStorageCell(cell)) {
+            return null;
+        }
+
         String uuidString = cell.getItemMeta().getPersistentDataContainer().get(StorageCell.CELL_UUID_KEY, PersistentDataType.STRING);
 
 //        String line = cell.getItemMeta().getLore().get(1);

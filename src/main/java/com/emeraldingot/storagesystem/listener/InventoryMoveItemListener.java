@@ -3,6 +3,7 @@ package com.emeraldingot.storagesystem.listener;
 
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
+import com.emeraldingot.storagesystem.item.StorageCell;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Material;
 import org.bukkit.block.Container;
@@ -40,7 +41,7 @@ public class InventoryMoveItemListener implements Listener {
                     StorageCellData storageCellData = StorageCellData.fromItemLore(storageCell.getItemMeta().getLore());
 
                     UUID cellUUID = storageCellData.getUUID();
-                    if (StorageCellData.isStorageCell(event.getItem())) {
+                    if (StorageCell.isStorageCell(event.getItem())) {
                         event.setCancelled(true);
                         return;
                     }

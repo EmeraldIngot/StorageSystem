@@ -4,6 +4,7 @@ import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
 import com.emeraldingot.storagesystem.impl.StorageSystemGUI;
+import com.emeraldingot.storagesystem.item.StorageCell;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.*;
 import org.bukkit.block.Dispenser;
@@ -86,7 +87,7 @@ public class InventoryListener implements Listener {
 
         ItemStack itemStack = event.getCurrentItem();
 
-        if (StorageCellData.isStorageCell(itemStack)) {
+        if (StorageCell.isStorageCell(itemStack)) {
             event.setCancelled(true);
             return;
         }

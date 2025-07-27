@@ -3,7 +3,6 @@ package com.emeraldingot.storagesystem.listener.controller;
 
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
-import com.emeraldingot.storagesystem.langauge.Language;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -31,7 +30,7 @@ public class StorageControllerPlaceListener implements Listener {
         }
 
 
-        if (!StorageControllerBlock.isStorageController(event.getItemInHand())) {
+        if (!StorageControllerBlock.isStorageControllerItem(event.getItemInHand())) {
             return;
         }
 
