@@ -171,16 +171,33 @@ public class TerminalGuiClickListener implements Listener {
 
 
             if (event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
-                ItemStack addedStack = event.getCurrentItem();
+
+                ItemStack addedStack = event.getCurrentItem().clone();
 
                 if (getScaledByteValue(addedStack) > bytesLeft) {
                     event.setCancelled(true);
                     return;
                 }
 
+                boolean refreshPage = false;
+
+                // If the inventory is full, a new page needs to be added
+                // The item also needs to be manually removed from the client since it has nowhere to go
+                if (event.getView().getTopInventory().firstEmpty() == -1) {
+                    refreshPage = true;
+                    event.getWhoClicked().getInventory().setItem(event.getSlot(), null);
+                }
 
                 addToCell(storageCellData, addedStack);
+
+                if (refreshPage) {
+                    TerminalItemsPage terminalItemsPage = new TerminalItemsPage((Player)event.getWhoClicked(), storageCellData, storageSystemHolder.getPageNumber());
+                    event.getWhoClicked().openInventory(terminalItemsPage.build());
+                }
+
             }
+
+
 
 
 

@@ -110,7 +110,6 @@ public abstract class StorageCell {
     }
 
 
-
     public static int getBytesUsed(ItemStack itemStack) {
         int bytesUsed = itemStack.getItemMeta().getPersistentDataContainer().get(BYTES_USED_KEY, PersistentDataType.INTEGER);
         return bytesUsed;

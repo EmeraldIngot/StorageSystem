@@ -23,7 +23,7 @@ import java.util.function.Function;
 public class TerminalItemsPage extends AbstractTerminalPage {
 
     public static final int[] NAVIGATION_BAR = {45, 46, 47, 48, 49, 50, 51, 52, 53};
-    private static final int FINAL_PAGE_SLOT = 44;
+    public static final int FINAL_PAGE_SLOT = 44;
 
     private static final String PREVIOUS_PAGE_TEXTURE = "http://textures.minecraft.net/texture/528b8cf405eaf606a0210f0303b013179f8f12eaa95824129ebeef9e44b68230";
     private static final String FIRST_PAGE_TEXTURE = "http://textures.minecraft.net/texture/902ac2617482f61bad194f7bcb8b993431040eb40bd1b663ad41e98f3b324d26";
@@ -49,7 +49,7 @@ public class TerminalItemsPage extends AbstractTerminalPage {
 
         // first page is index 0, add 1 to look correct in the UI
         String title = Language.STORAGE_SYSTEM_TITLE + " (" + (pageNumber + 1) + "/" + pageCount + ")";
-        Inventory inventory = Bukkit.createInventory(new StorageSystemHolder(storageCellData), 54, title);
+        Inventory inventory = Bukkit.createInventory(new StorageSystemHolder(storageCellData, pageNumber), 54, title);
 
         ItemStack spacer = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
         ItemMeta spacerMeta = spacer.getItemMeta();

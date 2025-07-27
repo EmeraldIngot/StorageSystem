@@ -5,10 +5,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 public class StorageSystemHolder implements InventoryHolder {
-    private StorageCellData storageCellData;
 
-    public StorageSystemHolder (StorageCellData storageCellData) {
+    private StorageCellData storageCellData;
+    private int pageNumber;
+
+    public StorageSystemHolder (StorageCellData storageCellData, int pageNumber) {
         this.storageCellData = storageCellData;
+        this.pageNumber = pageNumber;
     }
 
     @Override
@@ -18,5 +21,9 @@ public class StorageSystemHolder implements InventoryHolder {
 
     public StorageCellData getStorageCellData() {
         return storageCellData;
+    }
+
+    public int getPageNumber() {
+        return pageNumber;
     }
 }

@@ -23,7 +23,7 @@ public class ItemsGuiClickListener implements Listener {
 //        }
 
         String title = event.getView().getTitle();
-
+        
 
         // don't have to return here since the next if statement will
         if (!title.equals(Language.STORAGE_SYSTEM_ITEMS_TITLE)) {

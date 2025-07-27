@@ -8,6 +8,7 @@ import com.emeraldingot.storagesystem.impl.DatabaseManager;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -41,8 +42,8 @@ public class TerminalSearchPage extends AbstractTerminalPage {
         int pageCount = TerminalItemsPage.getPageCount(filteredList);
 
         // first page is index 0, add 1 to look correct in the UI
-        String title = "Search: \"" + searchTerm + "\" (" + (pageNumber + 1) + "/" + pageCount + ")";
-        Inventory inventory = Bukkit.createInventory(new StorageSystemHolder(storageCellData), 54, title);
+        String title = ChatColor.YELLOW + "Search: \"" + searchTerm + "\" (" + (pageNumber + 1) + "/" + pageCount + ")";
+        Inventory inventory = Bukkit.createInventory(new StorageSystemHolder(storageCellData, pageNumber), 54, title);
 
         ItemStack spacer = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
         ItemMeta spacerMeta = spacer.getItemMeta();
