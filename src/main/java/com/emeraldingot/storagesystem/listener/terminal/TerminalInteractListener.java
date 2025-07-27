@@ -9,8 +9,10 @@ import com.emeraldingot.storagesystem.item.StorageCell;
 import com.emeraldingot.storagesystem.item.StorageTerminal;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Location;
+import org.bukkit.block.TileState;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -38,8 +40,27 @@ public class TerminalInteractListener implements Listener {
             return;
         }
 
+        if (!(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
+            return;
+        }
+
+        if (!event.getPlayer().hasPermission("storagesystem.use")) {
+            event.setCancelled(true);
+            event.getPlayer().sendMessage(Language.NO_PERMISSION);
+            return;
+        }
+
         if (event.getPlayer().isSneaking()) {
             return;
+        }
+
+        // Could have possibly clicked on another block which will open its own inventory
+        // This won't catch things like crafting tables, but TerminalGuiCloseListener handles edge cases
+        if (event.getClickedBlock() != null) {
+            if (event.getClickedBlock().getState() instanceof TileState) {
+                return;
+            }
+
         }
 
         if (!StorageTerminal.isPaired(event.getItem())) {
@@ -49,21 +70,7 @@ public class TerminalInteractListener implements Listener {
 
         Location location = StorageTerminal.getPairedLocation(event.getItem());
 
-        if (event.getPlayer().getLocation().distanceSquared(location) > Math.pow(StorageTerminal.TERMINAL_RANGE, 2)) {
-            event.getPlayer().sendMessage(Language.PAIRED_CONTROLLER_RANGE_MESSAGE);
-            return;
-        }
-
-//        if (location.getWorld() == null) {
-//            System.out.println(location);
-//            return;
-//        }
-
-//        Location location = ControllerManager.getInstance().getNearestController(event.getPlayer().getLocation());
-
-        // The block was removed but the controller still remains
-        // Ideally, this shouldn't get called, but if it does it will fix the issue
-
+        // The block was removed but the controller is still paired
         if (!StorageControllerBlock.isStorageController(location)) {
             event.getPlayer().sendMessage(Language.REMOVED_CONTROLLER_MESSAGE);
             ControllerManager.getInstance().removeController(location);
@@ -71,8 +78,19 @@ public class TerminalInteractListener implements Listener {
             return;
         }
 
+        if (event.getPlayer().getLocation().distanceSquared(location) > Math.pow(StorageTerminal.TERMINAL_RANGE, 2)) {
+            event.getPlayer().sendMessage(Language.PAIRED_CONTROLLER_RANGE_MESSAGE);
+            return;
+        }
+
+
         if (!ControllerManager.getInstance().isOnline(location)) {
             event.getPlayer().sendMessage(Language.PAIRED_CONTROLLER_OFFLINE_MESSAGE);
+            return;
+        }
+
+        if (ControllerManager.getInstance().isInUse(location)) {
+            event.getPlayer().sendMessage(Language.CONTROLLER_IN_USE_MESSAGE);
             return;
         }
 
@@ -91,7 +109,7 @@ public class TerminalInteractListener implements Listener {
             // TODO: If player gets disconnected while using controller, it will break
 
             event.getPlayer().openInventory(StorageSystemGui.getInventory(event.getPlayer(), StorageCellData.fromItemStack(cell, location)));
-            ControllerManager.getInstance().openController(location);
+            ControllerManager.getInstance().openController(location, event.getPlayer());
 
 //            event.getPlayer().openInventory(StorageSystemGUI.getCompleteStoragePage(uuid, location, 0));
 
@@ -125,6 +143,10 @@ public class TerminalInteractListener implements Listener {
         }
 
         if (!event.getPlayer().isSneaking()) {
+            return;
+        }
+
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
 

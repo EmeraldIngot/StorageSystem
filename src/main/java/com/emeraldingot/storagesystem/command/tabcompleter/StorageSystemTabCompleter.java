@@ -12,6 +12,10 @@ public class StorageSystemTabCompleter implements TabCompleter {
     public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
         List<String> argumentList = new ArrayList<>();
 
+        if (!commandSender.hasPermission("storagesystem.admin")) {
+            return argumentList;
+        }
+
         if (strings.length == 1) {
             argumentList.add("items");
         }

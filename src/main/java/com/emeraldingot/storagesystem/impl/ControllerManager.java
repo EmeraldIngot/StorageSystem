@@ -5,6 +5,7 @@ import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.item.StorageCell;
 import com.emeraldingot.storagesystem.item.StorageCell16K;
 import com.emeraldingot.storagesystem.item.StorageCell1K;
+import com.emeraldingot.storagesystem.listener.PlayerJoinListener;
 import com.emeraldingot.storagesystem.listener.gui.TerminalGuiClickListener;
 import com.emeraldingot.storagesystem.util.ControllerFileManager;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -24,13 +26,11 @@ import javax.naming.ldap.Control;
 import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class ControllerManager {
     private ArrayList<Location> storageControllers = new ArrayList<>();
-    private ArrayList<Location> controllersInUse = new ArrayList<>();
+    private Map<Location, Player> controllersInUse = new HashMap<>();
 
     public ControllerManager() {
         try {
@@ -171,7 +171,7 @@ public class ControllerManager {
 
         for (Location location : storageControllers) {
 
-            if (controllersInUse.contains(location)) {
+            if (controllersInUse.keySet().contains(location)) {
                 continue;
             }
             // TODO: Use distanceSquared instead
@@ -191,12 +191,25 @@ public class ControllerManager {
         }
     }
 
-    public void openController(Location location) {
-        controllersInUse.add(location);
+    public void openController(Location location, Player player) {
+        controllersInUse.put(location, player);
     }
     public void closeController(Location location) {
         controllersInUse.remove(location);
     }
+
+    public boolean isInUse(Location location) {
+        return controllersInUse.keySet().contains(location);
+    }
+
+    public Player getPlayerUsing(Location location) {
+        if (!isInUse(location)) {
+            return null;
+        }
+
+        return controllersInUse.get(location);
+    }
+
 
     // TODO: refactor this into the database and store the locations, their current cell UUID, and capacity max and current
 

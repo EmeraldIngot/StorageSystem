@@ -6,3 +6,10 @@ commands:
   storagesystem:
     description: "StorageSystem command"
     usage: /<command> <argument>
+permissions:
+  storagesystem.admin:
+    description: "Allows use of admin tools and commands"
+    default: op
+  storagesystem.use:
+    description: "Allows use of the storage system by players"
+    default: true

@@ -61,6 +61,7 @@ public class StorageSystem extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new TerminalGuiClickListener(), this);
         getServer().getPluginManager().registerEvents(new TerminalGuiCloseListener(), this);
+        getServer().getPluginManager().registerEvents(new StorageControllerOpenListener(), this);
 
         // Commands
         this.getCommand("storagesystem").setExecutor(new StorageSystemCommand());

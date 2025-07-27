@@ -8,19 +8,29 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 public class PlayerJoinListener implements Listener {
+    private static final Set<NamespacedKey> RECIPE_KEYS = Set.of(
+            new NamespacedKey(StorageSystem.getInstance(), "storage_cell_1k"),
+            new NamespacedKey(StorageSystem.getInstance(), "storage_cell_4k"),
+            new NamespacedKey(StorageSystem.getInstance(), "storage_cell_16k"),
+            new NamespacedKey(StorageSystem.getInstance(), "storage_cell_64k"),
+            new NamespacedKey(StorageSystem.getInstance(), "storage_cell_256k"),
+            new NamespacedKey(StorageSystem.getInstance(), "storage_controller"),
+            new NamespacedKey(StorageSystem.getInstance(), "storage_core"),
+            new NamespacedKey(StorageSystem.getInstance(), "storage_terminal")
+    );
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) throws SQLException {
+    public void onPlayerJoin(PlayerJoinEvent event) {
 
-        event.getPlayer().discoverRecipe(new NamespacedKey(StorageSystem.getInstance(), "storage_cell_1k"));
-        event.getPlayer().discoverRecipe(new NamespacedKey(StorageSystem.getInstance(), "storage_cell_4k"));
-        event.getPlayer().discoverRecipe(new NamespacedKey(StorageSystem.getInstance(), "storage_cell_16k"));
-        event.getPlayer().discoverRecipe(new NamespacedKey(StorageSystem.getInstance(), "storage_cell_64k"));
-        event.getPlayer().discoverRecipe(new NamespacedKey(StorageSystem.getInstance(), "storage_cell_256k"));
-        event.getPlayer().discoverRecipe(new NamespacedKey(StorageSystem.getInstance(), "storage_controller"));
-        event.getPlayer().discoverRecipe(new NamespacedKey(StorageSystem.getInstance(), "storage_core"));
-        event.getPlayer().discoverRecipe(new NamespacedKey(StorageSystem.getInstance(), "storage_terminal"));
+        if (event.getPlayer().hasPermission("storagesystem.use")) {
+            event.getPlayer().discoverRecipes(RECIPE_KEYS);
+        }
+        else {
+            event.getPlayer().undiscoverRecipes(RECIPE_KEYS);
+        }
+
 
     }
 

@@ -12,11 +12,12 @@ public class StorageSystemCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
-        if (!commandSender.isOp()) {
+        if (!commandSender.hasPermission("storagesystem.admin")) {
             commandSender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             // returning false will show the command description, which is not necessary
             return true;
         }
+
         if (strings.length < 1) {
             commandSender.sendMessage(ChatColor.RED + "You must provide at least one argument!");
             return false;

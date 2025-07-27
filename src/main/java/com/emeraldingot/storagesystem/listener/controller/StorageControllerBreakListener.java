@@ -8,6 +8,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -31,6 +32,14 @@ public class StorageControllerBreakListener implements Listener {
             return;
         }
 
+        if (!event.getPlayer().hasPermission("storagesystem.use")) {
+            event.setCancelled(true);
+            event.getPlayer().sendMessage(Language.NO_PERMISSION);
+            return;
+        }
+
+
+
         event.setDropItems(false);
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
             block.getWorld().dropItemNaturally(block.getLocation(), StorageControllerBlock.getStack());
@@ -38,7 +47,15 @@ public class StorageControllerBreakListener implements Listener {
 
         Inventory inventory = ((Dispenser) block.getState()).getInventory();
         StorageControllerBlock.clearStatusSlots(inventory);
+
+        if (ControllerManager.getInstance().isInUse(block.getLocation())) {
+            Player player = ControllerManager.getInstance().getPlayerUsing(block.getLocation());
+            player.closeInventory();
+            ControllerManager.getInstance().closeController(block.getLocation());
+        }
+
         ControllerManager.getInstance().removeController(block.getLocation());
+
 
 
 
