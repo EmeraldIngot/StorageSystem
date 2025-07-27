@@ -24,7 +24,7 @@ public class PrepareCraftItemsListener implements Listener {
         }
 
         // Recipe: 1k cell
-        if (isSameName(event.getInventory().getResult(), StorageCell1K.getStack())) {;
+        if (isSameName(event.getInventory().getResult(), new StorageCell1K().getStack())) {;
             if (isSameName(event.getInventory().getItem(5), StorageCore.getStack())) {
                 return;
             }
@@ -34,8 +34,8 @@ public class PrepareCraftItemsListener implements Listener {
         }
 
         // Recipe: 4k cell
-        if (isSameName(event.getInventory().getResult(), StorageCell4K.getStack())) {
-            if (isSameName(event.getInventory().getItem(5), StorageCell1K.getStack())) {
+        if (isSameName(event.getInventory().getResult(), new StorageCell4K().getStack())) {
+            if (isSameName(event.getInventory().getItem(5), new StorageCell1K().getStack())) {
                 return;
             }
             else {
@@ -44,8 +44,8 @@ public class PrepareCraftItemsListener implements Listener {
         }
 
         // Recipe: 16k cell
-        if (isSameName(event.getInventory().getResult(), StorageCell16K.getStack())) {
-            if (isSameName(event.getInventory().getItem(5), StorageCell4K.getStack())) {
+        if (isSameName(event.getInventory().getResult(), new StorageCell16K().getStack())) {
+            if (isSameName(event.getInventory().getItem(5), new StorageCell4K().getStack())) {
                 return;
             }
             else {
@@ -54,8 +54,8 @@ public class PrepareCraftItemsListener implements Listener {
         }
 
         // Recipe: 64k cell
-        if (isSameName(event.getInventory().getResult(), StorageCell64K.getStack())) {
-            if (isSameName(event.getInventory().getItem(5), StorageCell16K.getStack())) {
+        if (isSameName(event.getInventory().getResult(), new StorageCell64K().getStack())) {
+            if (isSameName(event.getInventory().getItem(5), new StorageCell16K().getStack())) {
                 return;
             }
             else {
@@ -64,8 +64,8 @@ public class PrepareCraftItemsListener implements Listener {
         }
 
         // Recipe: 256k cell
-        if (isSameName(event.getInventory().getResult(), StorageCell256K.getStack())) {
-            if (isSameName(event.getInventory().getItem(5), StorageCell64K.getStack())) {
+        if (isSameName(event.getInventory().getResult(), new StorageCell256K().getStack())) {
+            if (isSameName(event.getInventory().getItem(5), new StorageCell64K().getStack())) {
                 return;
             }
             else {

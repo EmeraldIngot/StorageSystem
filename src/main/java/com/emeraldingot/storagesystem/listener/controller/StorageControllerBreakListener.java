@@ -24,14 +24,12 @@ public class StorageControllerBreakListener implements Listener {
             return;
         }
 
-        if (((Dispenser) block.getState()).getCustomName() == null) {
+
+//        Dispenser dispenser = (Dispenser) block.getState();
+
+        if (!StorageControllerBlock.isStorageController(block.getLocation())) {
             return;
         }
-
-        if (!((Dispenser) block.getState()).getCustomName().equals(Language.STORAGE_CONTROLLER_ITEM)) {
-            return;
-        }
-
 
         event.setDropItems(false);
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {

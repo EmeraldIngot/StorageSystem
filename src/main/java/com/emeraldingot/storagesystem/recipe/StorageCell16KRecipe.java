@@ -16,9 +16,9 @@ public class StorageCell16KRecipe implements Recipe {
     public void registerRecipe(Plugin plugin) {
         NamespacedKey namespacedKey = new NamespacedKey(plugin, "storage_cell_16k");
 
-        RecipeChoice.ExactChoice storageCellChoice = new RecipeChoice.ExactChoice(StorageCell4K.getStack());
+        RecipeChoice.ExactChoice storageCellChoice = new RecipeChoice.ExactChoice(new StorageCell4K().getStack());
 
-        ShapedRecipe shapedRecipe = new ShapedRecipe(namespacedKey, StorageCell16K.getStack());
+        ShapedRecipe shapedRecipe = new ShapedRecipe(namespacedKey, new StorageCell16K().getStack());
 
         shapedRecipe.shape("#%#", "*&*", "#%#");
 
@@ -32,6 +32,6 @@ public class StorageCell16KRecipe implements Recipe {
 
     @Override
     public ItemStack getResult() {
-        return StorageCell16K.getStack();
+        return new StorageCell16K().getStack();
     }
 }

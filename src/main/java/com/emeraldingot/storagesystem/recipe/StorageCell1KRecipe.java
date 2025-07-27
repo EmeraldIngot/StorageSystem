@@ -16,7 +16,7 @@ public class StorageCell1KRecipe implements Recipe{
 
         RecipeChoice.ExactChoice storageCoreChoice = new RecipeChoice.ExactChoice(StorageCore.getStack());
 
-        ShapedRecipe shapedRecipe = new ShapedRecipe(namespacedKey, StorageCell1K.getStack());
+        ShapedRecipe shapedRecipe = new ShapedRecipe(namespacedKey, new StorageCell1K().getStack());
 
         shapedRecipe.shape("#%#", "*&*", "#%#");
 
@@ -30,6 +30,6 @@ public class StorageCell1KRecipe implements Recipe{
 
     @Override
     public ItemStack getResult() {
-        return StorageCell1K.getStack();
+        return new StorageCell1K().getStack();
     }
 }

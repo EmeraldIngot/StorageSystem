@@ -1,19 +1,26 @@
 package com.emeraldingot.storagesystem.block;
 
+import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.langauge.Language;
 import com.emeraldingot.storagesystem.util.SkullUtil;
 import net.md_5.bungee.api.ChatColor;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.block.Dispenser;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 
 public class StorageControllerBlock {
+
+    private static final int[] SPACER_SLOTS = {0,1,2,3,5,6,7,8};
+
+    public static final NamespacedKey CONTROLLER_KEY = new NamespacedKey(StorageSystem.getInstance(), "storage_controller");
 
     public static ItemStack getStack()  {
         ItemStack storageController = new ItemStack(Material.DISPENSER);
@@ -23,7 +30,12 @@ public class StorageControllerBlock {
         ArrayList<String> lore = new ArrayList<>();
         lore.add(ChatColor.DARK_GRAY + "StorageSystem");
         itemMeta.setLore(lore);
+
+        itemMeta.getPersistentDataContainer().set(CONTROLLER_KEY, PersistentDataType.BYTE, (byte) 0);
+
         storageController.setItemMeta(itemMeta);
+
+
         return storageController;
     }
 
@@ -37,14 +49,12 @@ public class StorageControllerBlock {
         indicatorMeta.setLore(lore);
         indicator.setItemMeta(indicatorMeta);
 
-        inventory.setItem(0, indicator);
-        inventory.setItem(1, indicator);
-        inventory.setItem(2, indicator);
-        inventory.setItem(3, indicator);
-        inventory.setItem(5, indicator);
-        inventory.setItem(6, indicator);
-        inventory.setItem(7, indicator);
-        inventory.setItem(8, indicator);
+
+        for (int slot : SPACER_SLOTS) {
+            inventory.setItem(slot, indicator);
+        }
+
+
     }
 
     public static void setOnline(Inventory inventory) {
@@ -57,26 +67,18 @@ public class StorageControllerBlock {
         indicatorMeta.setLore(lore);
         indicator.setItemMeta(indicatorMeta);
 
-        inventory.setItem(0, indicator);
-        inventory.setItem(1, indicator);
-        inventory.setItem(2, indicator);
-        inventory.setItem(3, indicator);
-        inventory.setItem(5, indicator);
-        inventory.setItem(6, indicator);
-        inventory.setItem(7, indicator);
-        inventory.setItem(8, indicator);
+        for (int slot : SPACER_SLOTS) {
+            inventory.setItem(slot, indicator);
+        }
+
     }
 
     public static void clearStatusSlots(Inventory inventory) {
 
-        inventory.setItem(0, null);
-        inventory.setItem(1, null);
-        inventory.setItem(2, null);
-        inventory.setItem(3, null);
-        inventory.setItem(5, null);
-        inventory.setItem(6, null);
-        inventory.setItem(7, null);
-        inventory.setItem(8, null);
+        for (int slot : SPACER_SLOTS) {
+            inventory.setItem(slot, null);
+        }
+
     }
 
     public static boolean isStatusPane(ItemStack itemStack) {
@@ -101,7 +103,18 @@ public class StorageControllerBlock {
             return false;
         }
         Dispenser dispenser = (Dispenser) location.getBlock().getState();
-        return dispenser.getCustomName().equals(Language.STORAGE_CONTROLLER_ITEM);
+
+        return dispenser.getPersistentDataContainer().has(CONTROLLER_KEY);
+    }
+
+    public static boolean isStorageController(ItemStack itemStack) {
+        if (itemStack.getItemMeta() == null) {
+            return false;
+        }
+
+
+
+        return itemStack.getItemMeta().getPersistentDataContainer().has(CONTROLLER_KEY);
     }
 
 }

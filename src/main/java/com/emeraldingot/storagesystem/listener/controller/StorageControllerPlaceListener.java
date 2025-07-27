@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.SQLException;
 
@@ -30,13 +31,18 @@ public class StorageControllerPlaceListener implements Listener {
         }
 
 
-        if (!item.getItemMeta().getItemName().equals(Language.STORAGE_CONTROLLER_ITEM)) {
+        if (!StorageControllerBlock.isStorageController(event.getItemInHand())) {
             return;
         }
 
         Block block = event.getBlock();
+        Dispenser dispenser = (Dispenser) block.getState();
 
-        Inventory inventory = ((Dispenser) block.getState()).getInventory();
+        dispenser.getPersistentDataContainer().set(StorageControllerBlock.CONTROLLER_KEY, PersistentDataType.BYTE, (byte) 0);
+
+        dispenser.update();
+
+        Inventory inventory = (dispenser.getInventory());
         StorageControllerBlock.setOffline(inventory);
         ControllerManager.getInstance().addController(block.getLocation());
 //        System.out.println(inventory.getClass());

@@ -11,11 +11,11 @@ public class ItemsGUI {
     public static Inventory getInventory() {
         Inventory inventory = Bukkit.createInventory(null , 9 * 2, Language.STORAGE_SYSTEM_ITEMS_TITLE);
         inventory.addItem(StorageCore.getStack());
-        inventory.addItem(StorageCell1K.getStack());
-        inventory.addItem(StorageCell4K.getStack());
-        inventory.addItem(StorageCell16K.getStack());
-        inventory.addItem(StorageCell64K.getStack());
-        inventory.addItem(StorageCell256K.getStack());
+        inventory.addItem(new StorageCell1K().getStack());
+        inventory.addItem(new StorageCell4K().getStack());
+        inventory.addItem(new StorageCell16K().getStack());
+        inventory.addItem(new StorageCell64K().getStack());
+        inventory.addItem(new StorageCell256K().getStack());
         inventory.addItem(StorageControllerBlock.getStack());
         inventory.addItem(StorageTerminal.getStack());
         return inventory;

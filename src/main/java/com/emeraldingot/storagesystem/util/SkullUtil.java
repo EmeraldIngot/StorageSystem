@@ -1,5 +1,6 @@
 package com.emeraldingot.storagesystem.util;
 
+import com.emeraldingot.storagesystem.item.StorageCell;
 import com.emeraldingot.storagesystem.item.StorageCell1K;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -18,7 +19,7 @@ public class SkullUtil {
         ItemStack itemStack = new ItemStack(Material.PLAYER_HEAD);
 
         SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
-        PlayerProfile playerProfile = Bukkit.createPlayerProfile(StorageCell1K.EMPTY_UUID);
+        PlayerProfile playerProfile = Bukkit.createPlayerProfile(StorageCell.EMPTY_UUID);
         playerProfile.getTextures().setSkin(URI.create(url).toURL());
         skullMeta.setOwnerProfile(playerProfile);
         itemStack.setItemMeta(skullMeta);

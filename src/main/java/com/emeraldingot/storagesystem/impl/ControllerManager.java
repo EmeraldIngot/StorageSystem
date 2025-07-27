@@ -2,6 +2,7 @@ package com.emeraldingot.storagesystem.impl;
 
 import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
+import com.emeraldingot.storagesystem.item.StorageCell;
 import com.emeraldingot.storagesystem.item.StorageCell16K;
 import com.emeraldingot.storagesystem.item.StorageCell1K;
 import com.emeraldingot.storagesystem.util.ControllerFileManager;
@@ -83,13 +84,13 @@ public class ControllerManager {
             return null;
         }
 
-        String uuidString = cell.getItemMeta().getPersistentDataContainer().get(StorageCell1K.CELL_UUID_KEY, PersistentDataType.STRING);
+        String uuidString = cell.getItemMeta().getPersistentDataContainer().get(StorageCell.CELL_UUID_KEY, PersistentDataType.STRING);
 
 //        String line = cell.getItemMeta().getLore().get(1);
 
         UUID uuid = UUID.fromString(uuidString);
 
-        if (uuid.equals(StorageCell1K.EMPTY_UUID)) {
+        if (uuid.equals(StorageCell.EMPTY_UUID)) {
             return null;
         }
         else {
@@ -129,7 +130,7 @@ public class ControllerManager {
         lore.set(1, ChatColor.WHITE + "Cell ID: " + uuid);
         itemMeta.setLore(lore);
 
-        itemMeta.getPersistentDataContainer().set(StorageCell1K.CELL_UUID_KEY, PersistentDataType.STRING, uuid.toString());
+        itemMeta.getPersistentDataContainer().set(StorageCell.CELL_UUID_KEY, PersistentDataType.STRING, uuid.toString());
 
         cell.setItemMeta(itemMeta);
         try {
@@ -147,11 +148,13 @@ public class ControllerManager {
         double closestLocationDistance = Integer.MAX_VALUE;
 
         for (Location location : storageControllers) {
+
             if (controllersInUse.contains(location)) {
                 continue;
             }
             // TODO: Use distanceSquared instead
             double distance = location.distance(playerLocation);
+
             if (distance < closestLocationDistance) {
                 closestLocation = location;
                 closestLocationDistance = distance;

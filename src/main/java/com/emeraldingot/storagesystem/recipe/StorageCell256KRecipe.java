@@ -15,9 +15,9 @@ public class StorageCell256KRecipe implements Recipe {
     public void registerRecipe(Plugin plugin) {
         NamespacedKey namespacedKey = new NamespacedKey(plugin, "storage_cell_256k");
 
-        RecipeChoice.ExactChoice storageCellChoice = new RecipeChoice.ExactChoice(StorageCell64K.getStack());
+        RecipeChoice.ExactChoice storageCellChoice = new RecipeChoice.ExactChoice(new StorageCell64K().getStack());
 
-        ShapedRecipe shapedRecipe = new ShapedRecipe(namespacedKey, StorageCell256K.getStack());
+        ShapedRecipe shapedRecipe = new ShapedRecipe(namespacedKey, new StorageCell256K().getStack());
 
         shapedRecipe.shape("#%#", "*&*", "#%#");
 
@@ -31,6 +31,6 @@ public class StorageCell256KRecipe implements Recipe {
 
     @Override
     public ItemStack getResult() {
-        return StorageCell256K.getStack();
+        return new StorageCell256K().getStack();
     }
 }

@@ -1,4 +1,4 @@
-package com.emeraldingot.storagesystem.listener.controller;
+package com.emeraldingot.storagesystem.listener;
 
 
 import com.emeraldingot.storagesystem.langauge.Language;
