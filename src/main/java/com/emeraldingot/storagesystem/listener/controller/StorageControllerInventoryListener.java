@@ -1,4 +1,4 @@
-package com.emeraldingot.storagesystem.event;
+package com.emeraldingot.storagesystem.listener.controller;
 
 import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
@@ -6,7 +6,6 @@ import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 
 import org.bukkit.event.EventHandler;
@@ -15,7 +14,6 @@ import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class StorageControllerInventoryListener implements Listener {
 

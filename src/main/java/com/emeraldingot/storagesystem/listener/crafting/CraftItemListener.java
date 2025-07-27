@@ -1,22 +1,16 @@
-package com.emeraldingot.storagesystem.event;
+package com.emeraldingot.storagesystem.listener.crafting;
 
 
 import com.emeraldingot.storagesystem.item.*;
 import org.bukkit.ChatColor;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Item;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.checkerframework.checker.units.qual.A;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class CraftItemListener implements Listener {

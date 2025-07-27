@@ -4,12 +4,15 @@ package com.emeraldingot.storagesystem;
 
 import com.emeraldingot.storagesystem.command.StorageSystemCommand;
 import com.emeraldingot.storagesystem.command.tabcompleter.StorageSystemTabCompleter;
-import com.emeraldingot.storagesystem.event.*;
+import com.emeraldingot.storagesystem.listener.*;
 import com.emeraldingot.storagesystem.impl.DatabaseManager;
+import com.emeraldingot.storagesystem.listener.controller.*;
+import com.emeraldingot.storagesystem.listener.crafting.CraftItemListener;
+import com.emeraldingot.storagesystem.listener.crafting.PrepareCraftItemsListener;
+import com.emeraldingot.storagesystem.listener.terminal.TerminalInteractListener;
 import com.emeraldingot.storagesystem.recipe.*;
 import com.emeraldingot.storagesystem.util.ControllerFileManager;
 import org.bukkit.*;
-import org.bukkit.block.data.type.Piston;
 import org.bukkit.entity.*;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -33,6 +36,8 @@ public class StorageSystem extends JavaPlugin {
     public UUID cellUUID;
     @Override
     public void onEnable() {
+        instance = this;
+
         getLogger().info("onEnable is called!");
         ControllerFileManager.getInstance().initData(this);
 
@@ -49,7 +54,7 @@ public class StorageSystem extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CraftItemListener(), this);
         getServer().getPluginManager().registerEvents(new PrepareCraftItemsListener(), this);
         getServer().getPluginManager().registerEvents(new BlockDispenseListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        getServer().getPluginManager().registerEvents(new TerminalInteractListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new CloseInventoryListener(), this);
         getServer().getPluginManager().registerEvents(new OpenInventoryListener(), this);
@@ -89,7 +94,7 @@ public class StorageSystem extends JavaPlugin {
             // Disable the plugin if the database connection fails, because we don't want enabled plugin with no functionality.
             Bukkit.getPluginManager().disablePlugin(this);
         }
-        instance = this;
+
 
 //        this.getCommand("gamble").setExecutor(new GambleCommand(databaseManager));
 //        this.getCommand("cashout").setExecutor(new CashoutCommand());

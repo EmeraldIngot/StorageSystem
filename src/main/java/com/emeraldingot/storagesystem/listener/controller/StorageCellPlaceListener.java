@@ -1,8 +1,7 @@
-package com.emeraldingot.storagesystem.event;
+package com.emeraldingot.storagesystem.listener.controller;
 
 
 import com.emeraldingot.storagesystem.langauge.Language;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

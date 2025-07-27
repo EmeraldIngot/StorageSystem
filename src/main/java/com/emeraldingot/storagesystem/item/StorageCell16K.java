@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 
@@ -19,6 +20,9 @@ public class StorageCell16K {
             lore.add(ChatColor.WHITE + "Cell ID: unset");
             lore.add(ChatColor.RESET + "" + ChatColor.DARK_GRAY + "StorageSystem");
             itemMeta.setLore(lore);
+
+            itemMeta.getPersistentDataContainer().set(StorageCell1K.CELL_UUID_KEY, PersistentDataType.STRING, StorageCell1K.EMPTY_UUID.toString());
+
             storageCore.setItemMeta(itemMeta);
             return storageCore;
         }

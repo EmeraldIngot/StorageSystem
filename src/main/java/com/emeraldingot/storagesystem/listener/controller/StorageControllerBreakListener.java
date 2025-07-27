@@ -1,11 +1,9 @@
-package com.emeraldingot.storagesystem.event;
+package com.emeraldingot.storagesystem.listener.controller;
 
 
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.langauge.Language;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,12 +11,9 @@ import org.bukkit.block.Dispenser;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.sql.SQLException;
-import java.util.List;
 
 public class StorageControllerBreakListener implements Listener {
     @EventHandler

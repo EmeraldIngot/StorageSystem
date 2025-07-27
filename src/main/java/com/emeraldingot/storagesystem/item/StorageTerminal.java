@@ -26,4 +26,17 @@ public class StorageTerminal {
         }
 
     }
+
+    public static boolean isStorageTerminal(ItemStack itemStack) {
+        ItemStack storageTerminal = getStack();
+        if (itemStack.getType() != storageTerminal.getType()) {
+            return false;
+        }
+
+        if (!itemStack.getItemMeta().equals(storageTerminal.getItemMeta())) {
+            return false;
+        }
+
+        return true;
+    }
 }

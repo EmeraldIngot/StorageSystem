@@ -1,16 +1,12 @@
-package com.emeraldingot.storagesystem.event;
+package com.emeraldingot.storagesystem.listener;
 
 
 import com.emeraldingot.storagesystem.StorageSystem;
-import com.emeraldingot.storagesystem.impl.ControllerManager;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import javax.naming.Name;
 import java.sql.SQLException;
 
 public class PlayerJoinListener implements Listener {

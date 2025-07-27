@@ -2,6 +2,8 @@ package com.emeraldingot.storagesystem.impl;
 
 import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
+import com.emeraldingot.storagesystem.item.StorageCell16K;
+import com.emeraldingot.storagesystem.item.StorageCell1K;
 import com.emeraldingot.storagesystem.util.ControllerFileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,6 +13,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.checkerframework.checker.units.qual.A;
 
 import javax.naming.ldap.Control;
@@ -75,13 +78,22 @@ public class ControllerManager {
             return null;
         }
         ItemStack cell = dispenser.getInventory().getItem(4);
-        String line = cell.getItemMeta().getLore().get(1);
-        try {
-            UUID uuid = UUID.fromString(line.split(": ")[1]);
-            return uuid;
-        }
-        catch (Exception e) {
+
+        if (cell == null || cell.getType() == Material.AIR) {
             return null;
+        }
+
+        String uuidString = cell.getItemMeta().getPersistentDataContainer().get(StorageCell1K.CELL_UUID_KEY, PersistentDataType.STRING);
+
+//        String line = cell.getItemMeta().getLore().get(1);
+
+        UUID uuid = UUID.fromString(uuidString);
+
+        if (uuid.equals(StorageCell1K.EMPTY_UUID)) {
+            return null;
+        }
+        else {
+            return uuid;
         }
 
     }
@@ -116,6 +128,9 @@ public class ControllerManager {
         List<String> lore = itemMeta.getLore();
         lore.set(1, ChatColor.WHITE + "Cell ID: " + uuid);
         itemMeta.setLore(lore);
+
+        itemMeta.getPersistentDataContainer().set(StorageCell1K.CELL_UUID_KEY, PersistentDataType.STRING, uuid.toString());
+
         cell.setItemMeta(itemMeta);
         try {
             DatabaseManager.getInstance().addStorageCell(uuid);
@@ -135,6 +150,7 @@ public class ControllerManager {
             if (controllersInUse.contains(location)) {
                 continue;
             }
+            // TODO: Use distanceSquared instead
             double distance = location.distance(playerLocation);
             if (distance < closestLocationDistance) {
                 closestLocation = location;

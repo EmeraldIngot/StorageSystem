@@ -1,30 +1,23 @@
-package com.emeraldingot.storagesystem.event;
+package com.emeraldingot.storagesystem.listener.controller;
 
 
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.langauge.Language;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.block.Container;
 import org.bukkit.block.Dispenser;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Directional;
-import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.material.MaterialData;
-import org.bukkit.util.Vector;
 
-import javax.naming.ldap.Control;
 import java.sql.SQLException;
-import java.util.List;
 
 public class StorageControllerPlaceListener implements Listener {
     @EventHandler
