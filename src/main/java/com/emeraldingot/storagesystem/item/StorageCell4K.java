@@ -21,6 +21,8 @@ public class StorageCell4K extends StorageCell {
             ItemStack storageCore = SkullUtil.createPlayerHead("http://textures.minecraft.net/texture/b7c81d15068854baafd67760f6fea9d8fb4b0a3b79e347c5159179591b85c4e7");
             ItemMeta itemMeta = storageCore.getItemMeta();
             itemMeta.setItemName(ChatColor.YELLOW + "4k Storage Cell");
+            itemMeta.setMaxStackSize(1);
+
             ArrayList<String> lore = new ArrayList<>();
 
             lore.add(ChatColor.WHITE + "Stored: " + filledBytes + "/" + SIZE + " bytes");

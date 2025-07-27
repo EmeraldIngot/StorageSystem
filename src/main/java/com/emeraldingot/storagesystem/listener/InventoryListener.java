@@ -47,7 +47,7 @@ public class InventoryListener implements Listener {
             if (!(event.getClickedInventory() instanceof PlayerInventory)) {
                 if (event.getAction() == InventoryAction.CLONE_STACK) {
                     ItemStack itemStack = event.getCurrentItem().clone();
-                    itemStack.setAmount(64);
+                    itemStack.setAmount(itemStack.getMaxStackSize());
                     event.getWhoClicked().setItemOnCursor(itemStack);
                 }
                 if (event.getAction() == InventoryAction.PICKUP_ALL){

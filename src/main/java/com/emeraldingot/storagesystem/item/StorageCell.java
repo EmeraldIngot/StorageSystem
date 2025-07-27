@@ -35,7 +35,6 @@ public abstract class StorageCell {
         }
 
         if (isLegacy(itemStack)) {
-            System.out.println("migrating legacy");
             migrateLegacy(itemStack);
             return true;
         }
