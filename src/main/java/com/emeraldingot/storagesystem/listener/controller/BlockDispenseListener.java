@@ -1,6 +1,7 @@
 package com.emeraldingot.storagesystem.listener.controller;
 
 
+import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
@@ -15,7 +16,8 @@ public class BlockDispenseListener implements Listener {
     public void onBlockDispense(BlockDispenseEvent event) throws SQLException {
 
         Block block = event.getBlock();
-        if (((Dispenser) block.getState()).getCustomName().equals(Language.STORAGE_CONTROLLER_ITEM)) {
+
+        if (StorageControllerBlock.isStorageController(block.getLocation())) {
             event.setCancelled(true);
             return;
         }
