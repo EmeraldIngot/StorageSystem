@@ -2,10 +2,9 @@ package com.emeraldingot.storagesystem.listener.terminal;
 
 
 import com.emeraldingot.storagesystem.block.StorageControllerBlock;
-import com.emeraldingot.storagesystem.gui.terminal.pages.TerminalItemsPage;
+import com.emeraldingot.storagesystem.gui.terminal.StorageSystemGui;
 import com.emeraldingot.storagesystem.impl.ControllerManager;
 import com.emeraldingot.storagesystem.impl.StorageCellData;
-import com.emeraldingot.storagesystem.impl.StorageSystemGUI;
 import com.emeraldingot.storagesystem.item.StorageTerminal;
 import com.emeraldingot.storagesystem.langauge.Language;
 import org.bukkit.Location;
@@ -59,8 +58,7 @@ public class TerminalInteractListener implements Listener {
         if (uuid != null) {
             // TODO: If player gets disconnected while using controller, it will break
 
-            TerminalItemsPage terminalItemsPage = new TerminalItemsPage(event.getPlayer(), StorageCellData.fromItemStack(cell, location), 0);
-            event.getPlayer().openInventory(terminalItemsPage.build());
+            event.getPlayer().openInventory(StorageSystemGui.getInventory(event.getPlayer(), StorageCellData.fromItemStack(cell, location)));
             ControllerManager.getInstance().openController(location);
 
 //            event.getPlayer().openInventory(StorageSystemGUI.getCompleteStoragePage(uuid, location, 0));

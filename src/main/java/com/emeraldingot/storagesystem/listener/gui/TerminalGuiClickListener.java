@@ -229,7 +229,7 @@ public class TerminalGuiClickListener implements Listener {
         return event.getAction().equals(action);
     }
 
-    private static void addToCell(StorageCellData storageCellData, ItemStack itemStack) {
+    public static void addToCell(StorageCellData storageCellData, ItemStack itemStack) {
         UUID uuid = storageCellData.getUUID();
 
         ItemStack cell = storageCellData.getStorageCell();
@@ -244,7 +244,7 @@ public class TerminalGuiClickListener implements Listener {
         DatabaseManager.getInstance().addItemsToCell(uuid, itemStack);
     }
 
-    private static void removeFromCell(StorageCellData storageCellData, ItemStack itemStack) {
+    public static void removeFromCell(StorageCellData storageCellData, ItemStack itemStack) {
         UUID uuid = storageCellData.getUUID();
 
         ItemStack cell = storageCellData.getStorageCell();
