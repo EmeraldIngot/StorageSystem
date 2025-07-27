@@ -11,6 +11,12 @@ I have tested this plugin for duplication glitches, item loss bugs, and other is
 
 If you find any problems at all, please open an issue so that I can fix them.
 
+# Permissions
+
+**storagesystem.admin** // Allows the use of StorageSystem admin commands and tool
+
+**storagesystem.use** // Allows the use of all StorageSystem items and controls whether a player has the item recipes
+
 # Help
 
 Need information or recipes? Read the [wiki](https://github.com/EmeraldIngot/StorageSystem/wiki)
