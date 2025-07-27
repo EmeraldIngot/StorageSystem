@@ -1,21 +1,30 @@
 package com.emeraldingot.storagesystem.impl;
 
+import com.emeraldingot.storagesystem.item.StorageCell;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 import java.util.UUID;
 
 public class StorageCellData {
+    private StorageCellType storageCellType;
     private UUID uuid;
-    private Location location;
-    public StorageCellData(UUID uuid, Location location) {
+    private ItemStack storageCell;
+    private Location controllerLocation;
+
+    public StorageCellData(StorageCellType storageCellType, UUID uuid, ItemStack storageCell, Location controllerLocation) {
+        this.storageCellType = storageCellType;
         this.uuid = uuid;
-        this.location = location;
+        this.controllerLocation = controllerLocation;
+        this.storageCell = storageCell;
     }
+
+    // TODO: Move this to StorageCell and check persistent data instead of lore
     public static boolean isStorageCell(ItemStack itemStack) {
         if (itemStack == null) {
             return false;
@@ -37,20 +46,36 @@ public class StorageCellData {
         double z = Double.parseDouble(lore.get(1).split(" Z: ")[1].split(" W: ")[0]);
         World world = Bukkit.getWorld(lore.get(1).split(" W: ")[1]);
         Location blockLocation = new Location(world, x, y, z);
-        return new StorageCellData(cellUUID, blockLocation);
+        return new StorageCellData(null, cellUUID, null, blockLocation);
     }
 
     public static StorageCellData fromItemLore(List<String> lore) {
         UUID cellUUID = UUID.fromString(lore.get(1).split("§fCell ID: ")[1]);
         Location blockLocation = null;
-        return new StorageCellData(cellUUID, blockLocation);
+        return new StorageCellData(null, cellUUID, null, blockLocation);
+    }
+
+    public static StorageCellData fromItemStack(ItemStack itemStack, Location newLocation) {
+        UUID newUuid = StorageCell.getUuid(itemStack);
+        StorageCellType newType = StorageCellType.valueOf(itemStack.getItemMeta().getPersistentDataContainer().get(StorageCell.CELL_TYPE_KEY, PersistentDataType.STRING));
+
+
+        return new StorageCellData(newType, newUuid, itemStack, newLocation);
     }
 
     public UUID getUUID() {
         return uuid;
     }
 
-    public Location getLocation() {
-        return location;
+    public Location getControllerLocation() {
+        return controllerLocation;
+    }
+
+    public StorageCellType getStorageCellType() {
+        return storageCellType;
+    }
+
+    public ItemStack getStorageCell() {
+        return storageCell;
     }
 }

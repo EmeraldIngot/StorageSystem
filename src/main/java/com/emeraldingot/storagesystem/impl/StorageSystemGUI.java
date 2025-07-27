@@ -25,13 +25,13 @@ import java.util.UUID;
 public class StorageSystemGUI {
 
 
-    private int calculateStacks(ItemStack itemStack) {
-        // 129 items / 64 = 2.something which is truncated to 2
-        int stackCount = (itemStack.getAmount() / itemStack.getMaxStackSize());
-        // if itemCount divides evenly then we're done, otherwise, there's 1 more stack
-        stackCount = (itemStack.getAmount() % itemStack.getMaxStackSize() == 0) ? (stackCount) : (stackCount + 1);
-        return stackCount;
-    }
+//    private int calculateStacks(ItemStack itemStack) {
+//        // 129 items / 64 = 2.something which is truncated to 2
+//        int stackCount = (itemStack.getAmount() / itemStack.getMaxStackSize());
+//        // if itemCount divides evenly then we're done, otherwise, there's 1 more stack
+//        stackCount = (itemStack.getAmount() % itemStack.getMaxStackSize() == 0) ? (stackCount) : (stackCount + 1);
+//        return stackCount;
+//    }
 
     private static int calculateFullStacks(ItemStack itemStack) {
         // 129 items / 64 = 2.something which is truncated to 2

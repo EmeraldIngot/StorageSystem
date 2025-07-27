@@ -64,60 +64,6 @@ public class StorageControllerInventoryListener implements Listener {
         }
 
 
-
-//        if (event.getAction().equals(InventoryAction.PLACE_ALL) || event.getAction().equals(InventoryAction.PLACE_ONE)  || event.getAction().equals(InventoryAction.PLACE_SOME) || event.getAction().equals(InventoryAction.PLACE_ALL)) {
-//            if(event.getClickedInventory() instanceof CraftInventory && !(event.getClickedInventory() instanceof  CraftInventoryPlayer)) {
-//                ItemStack itemStack = event.getCursor();
-//                ItemMeta itemMeta = itemStack.getItemMeta();
-//                if (itemMeta.getLore() != null && itemMeta.getLore().size() > 1 && itemMeta.getLore().get(1).contains("Cell ID")) {
-//                    event.setCancelled(false);
-//                }
-//                else {
-//                    event.setCancelled(true);
-//                    return;
-//                }
-//            }
-//        }
-//
-//        if (event.getAction().equals(InventoryAction.MOVE_TO_OTHER_INVENTORY)) {
-//            if (event.getClickedInventory() instanceof CraftInventoryPlayer) {
-//                ItemStack itemStack = event.getCurrentItem();
-//                ItemMeta itemMeta = itemStack.getItemMeta();
-//                if (itemMeta.getLore() != null && itemMeta.getLore().size() > 1 && itemMeta.getLore().get(1).contains("Cell ID")) {
-//                    event.setCancelled(false);
-//                }
-//                else {
-//                    event.setCancelled(true);
-//                    return;
-//                }
-//            }
-//        }
-//
-//        if (event.getAction().equals(InventoryAction.COLLECT_TO_CURSOR)) {
-//            event.setCancelled(true);
-//            return;
-//        }
-//
-//        if (event.getAction().equals(InventoryAction.DROP_ALL_SLOT)) {
-//            event.setCancelled(true);
-//            return;
-//        }
-//
-//        System.out.println(event.getAction());
-//
-//
-//        if (event.getCurrentItem() != null && event.getCurrentItem().getItemMeta() != null && event.getCurrentItem().getItemMeta().getLore() != null) {
-//            if (event.getCurrentItem().getItemMeta().getLore().get(0).endsWith("Indicator")) {
-//                event.setCancelled(true);
-//                return;
-//
-//            }
-//        }
-//
-//        if (event.getAction().equals(InventoryAction.HOTBAR_SWAP) || event.getAction().equals(InventoryAction.HOTBAR_MOVE_AND_READD)) {
-//            event.setCancelled(true);
-//            return;
-//        }
         event.setCancelled(false);
 
         Bukkit.getScheduler().runTaskLater(StorageSystem.getInstance(), new Runnable() {
@@ -127,25 +73,6 @@ public class StorageControllerInventoryListener implements Listener {
                 ControllerManager.getInstance().updateState(location);
             }
         }, 5L);
-
-
-
-
-
-
-//
-//        if (itemMeta.getLore().get(0).endsWith("Indicator")) {
-//            event.setCancelled(true);
-//            return;
-//        }
-
-
-
-
-
-//        ItemStack itemStack = event.getCurrentItem();
-//        System.out.println(event.getInventory());
-//        System.out.println(event.getClickedInventory());
 
 
 

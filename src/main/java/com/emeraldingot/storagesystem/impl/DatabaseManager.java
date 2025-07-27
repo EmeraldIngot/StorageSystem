@@ -70,12 +70,11 @@ public class DatabaseManager {
         }
     }
 
-    public void addItemsToCell(UUID uuid, ItemStack itemStack) throws SQLException {
+    public void addItemsToCell(UUID uuid, ItemStack itemStack) {
         String material = itemStack.getType().toString();  // Get the material type
         String itemMeta = toBase64(itemStack.getItemMeta());  // Get serialized item metadata
         int amountToAdd = itemStack.getAmount();  // Get the amount of items to add
 
-        // Step 1: Check if the item already exists in the database
         String selectQuery = "SELECT count FROM items WHERE cell_id = ? AND material = ? AND item_meta = ?";
         try (PreparedStatement selectStmt = connection.prepareStatement(selectQuery)) {
             selectStmt.setString(1, uuid.toString());
@@ -113,8 +112,9 @@ public class DatabaseManager {
                     }
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();  // Handle SQL exceptions (e.g., connection issues)
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -125,7 +125,6 @@ public class DatabaseManager {
         String itemMeta = toBase64(itemStack.getItemMeta());  // Get serialized metadata (can be empty or null)
         int amountToRemove = itemStack.getAmount();  // Get the amount to remove
 
-        // Step 1: Check if the item exists in the database
         String selectQuery = "SELECT count FROM items WHERE cell_id = ? AND material = ? AND item_meta = ?";
         try (PreparedStatement selectStmt = connection.prepareStatement(selectQuery)) {
             selectStmt.setString(1, uuid.toString());
@@ -169,14 +168,15 @@ public class DatabaseManager {
 //                    System.out.println("Item not found in the database.");
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();  // Handle SQL exceptions (e.g., connection issues)
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
 
 
-    public List<ItemStack> getItemsByCellUUID(UUID cellUUID) throws SQLException {
+    public List<ItemStack> getItemsByCellUUID(UUID cellUUID) {
         List<ItemStack> itemList = new ArrayList<>();
 
         String query = "SELECT material, item_meta, count FROM items WHERE cell_id = ?";
@@ -200,6 +200,10 @@ public class DatabaseManager {
                 throw new RuntimeException(e);
             }
         }
+        catch (SQLException e) {
+            System.out.println("Failed to get data for cell!");
+        }
+
         itemList.sort(Comparator.comparing(ItemStack::getType));
         return itemList;
     }

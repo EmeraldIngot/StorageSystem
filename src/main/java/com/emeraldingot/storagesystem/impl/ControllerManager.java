@@ -5,6 +5,7 @@ import com.emeraldingot.storagesystem.block.StorageControllerBlock;
 import com.emeraldingot.storagesystem.item.StorageCell;
 import com.emeraldingot.storagesystem.item.StorageCell16K;
 import com.emeraldingot.storagesystem.item.StorageCell1K;
+import com.emeraldingot.storagesystem.listener.gui.TerminalGuiClickListener;
 import com.emeraldingot.storagesystem.util.ControllerFileManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -14,6 +15,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SuspiciousStewMeta;
 import org.bukkit.persistence.PersistentDataType;
 import org.checkerframework.checker.units.qual.A;
 
@@ -99,6 +101,17 @@ public class ControllerManager {
 
     }
 
+    public ItemStack getCell(Location location) {
+        Dispenser dispenser = (Dispenser) location.getBlock().getState();
+
+        if (!isOnline(location)) {
+            return null;
+        }
+        ItemStack cell = dispenser.getInventory().getItem(4);
+
+        return cell;
+    }
+
     public void updateState(Location location) {
         Dispenser dispenser = (Dispenser) location.getBlock().getState();
 
@@ -112,12 +125,10 @@ public class ControllerManager {
         else {
             StorageControllerBlock.setOffline(dispenser.getInventory());
         }
-        try {
-            recalculateUsed(location);
-        }
-        catch (Exception e) {
-            return;
-        }
+
+        recalculateUsed(location);
+        checkBytesUsed(location);
+
     }
 
     private void generateID(Location location) {
@@ -211,23 +222,51 @@ public class ControllerManager {
         }
     }
 
-    public void recalculateUsed(Location location) throws SQLException {
+    public void recalculateUsed(Location location) {
         Dispenser dispenser = (Dispenser) location.getBlock().getState();
         ItemStack cell = dispenser.getInventory().getItem(4);
-        ItemMeta itemMeta = cell.getItemMeta();
-        List<String> lore = itemMeta.getLore();
-        UUID uuid = UUID.fromString(lore.get(1).split("Cell ID: ")[1]);
-        List<ItemStack> itemStacks = DatabaseManager.getInstance().getItemsByCellUUID(uuid);
-        int total = 0;
-        for (ItemStack itemStack : itemStacks) {
-            total += getScaledAmount(itemStack);
+
+        if (cell == null) {
+            return;
         }
 
-        String maxAmount = lore.get(0).split(": ")[1].split("/")[1];
-        lore.set(0, ChatColor.WHITE + "Stored: " + (total) + "/" + maxAmount);
+        int bytesUsed = StorageCell.getBytesUsed(cell);
+
+        ItemMeta itemMeta = cell.getItemMeta();
+        List<String> lore = itemMeta.getLore();
+
+        int maxCapacity = StorageCell.getCapacity(cell);
+        lore.set(0, ChatColor.WHITE + "Stored: " + (bytesUsed) + "/" + maxCapacity);
         itemMeta.setLore(lore);
         cell.setItemMeta(itemMeta);
     }
+
+    public void checkBytesUsed(Location location) {
+        Dispenser dispenser = (Dispenser) location.getBlock().getState();
+        ItemStack cell = dispenser.getInventory().getItem(4);
+
+        if (cell == null) {
+            return;
+        }
+
+        UUID uuid = StorageCell.getUuid(cell);
+
+        int storedBytesUsed = StorageCell.getBytesUsed(cell);
+
+        int realBytesUsed = 0;
+        for (ItemStack itemStack : DatabaseManager.getInstance().getItemsByCellUUID(uuid)) {
+            realBytesUsed += TerminalGuiClickListener.getScaledByteValue(itemStack);
+        }
+
+        if (realBytesUsed != storedBytesUsed) {
+//            System.out.println("something awful has happened!");
+        }
+        else {
+//            System.out.println("everything working as expected");
+        }
+    }
+
+
 
     public int getScaledAmount(ItemStack itemStack) {
         return (64 / itemStack.getMaxStackSize()) * itemStack.getAmount();

@@ -3,20 +3,15 @@ package com.emeraldingot.storagesystem.listener.crafting;
 
 import com.emeraldingot.storagesystem.impl.StorageCellType;
 import com.emeraldingot.storagesystem.item.*;
-import com.emeraldingot.storagesystem.listener.controller.StorageControllerInventoryListener;
-import org.bukkit.ChatColor;
-import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.UUID;
 
 public class CraftItemListener implements Listener {
@@ -44,7 +39,7 @@ public class CraftItemListener implements Listener {
 
             UUID uuid = StorageCell.getUuid(oldCell);
 
-            int oldFilledAmount = StorageCell.getFilledAmount(oldCell);
+            int oldFilledAmount = StorageCell.getBytesUsed(oldCell);
 
             ItemStack migratedCell = storageCell.getStack(oldFilledAmount, uuid);
 

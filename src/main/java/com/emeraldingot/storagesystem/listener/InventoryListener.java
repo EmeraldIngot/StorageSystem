@@ -67,7 +67,7 @@ public class InventoryListener implements Listener {
         StorageCellData storageCellData = StorageCellData.fromGUILore(infoItem.getItemMeta().getLore());
 
         UUID cellUUID = storageCellData.getUUID();
-        Location blockLocation = storageCellData.getLocation();
+        Location blockLocation = storageCellData.getControllerLocation();
 
 //        if (!StorageControllerBlock.isStorageController(blockLocation)) {
 //            event.setCancelled(true);

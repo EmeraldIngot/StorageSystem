@@ -37,6 +37,7 @@ public class StorageCell64K extends StorageCell {
 
             itemMeta.getPersistentDataContainer().set(StorageCell.CELL_UUID_KEY, PersistentDataType.STRING, uuid.toString());
             itemMeta.getPersistentDataContainer().set(StorageCell.CELL_TYPE_KEY, PersistentDataType.STRING, StorageCellType.CELL_64K.toString());
+            itemMeta.getPersistentDataContainer().set(StorageCell.BYTES_USED_KEY, PersistentDataType.INTEGER, 0);
 
             storageCore.setItemMeta(itemMeta);
             return storageCore;
