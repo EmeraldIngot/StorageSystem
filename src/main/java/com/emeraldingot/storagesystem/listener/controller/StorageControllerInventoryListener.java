@@ -51,6 +51,10 @@ public class StorageControllerInventoryListener implements Listener {
         ItemStack cursorItem = event.getCursor();
         ItemStack currentItem = event.getCurrentItem();
 
+        if (currentItem == null) {
+            return;
+        }
+
         if (StorageControllerBlock.isStatusPane(currentItem) || StorageControllerBlock.isStatusPane(currentItem)) {
             event.setCancelled(true);
             return;

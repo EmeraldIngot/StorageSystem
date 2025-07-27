@@ -3,6 +3,7 @@ package com.emeraldingot.storagesystem.item;
 import com.emeraldingot.storagesystem.StorageSystem;
 import com.emeraldingot.storagesystem.impl.StorageCellType;
 import com.emeraldingot.storagesystem.langauge.Language;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Item;
 import org.bukkit.event.entity.ItemSpawnEvent;
@@ -21,6 +22,14 @@ public abstract class StorageCell {
     public static final UUID EMPTY_UUID = UUID.fromString("00000000-0000-0000-0000-000000000000");
 
     public static boolean isStorageCell(ItemStack itemStack) {
+        if (itemStack == null) {
+            return false;
+        }
+
+        if (itemStack.getType() == Material.AIR) {
+            return false;
+        }
+
         if (itemStack.getItemMeta() == null) {
             return false;
         }
@@ -71,7 +80,16 @@ public abstract class StorageCell {
 
         try {
             List<String> lore = itemMeta.getLore();
-            UUID cellUUID = UUID.fromString(lore.get(1).split("§fCell ID: ")[1]);
+            String uuidString = lore.get(1).split("§fCell ID: ")[1];
+
+
+            UUID cellUUID;
+            if (uuidString.equals("unset")) {
+                cellUUID = EMPTY_UUID;
+            }
+            else {
+                cellUUID = UUID.fromString(uuidString);
+            }
 
 
             String[] cellDataString = lore.get(0).split("Stored: ")[1].split("/");
@@ -97,6 +115,8 @@ public abstract class StorageCell {
             itemMeta.getPersistentDataContainer().set(CELL_UUID_KEY, PersistentDataType.STRING, cellUUID.toString());
             itemMeta.getPersistentDataContainer().set(CELL_TYPE_KEY, PersistentDataType.STRING, storageCellType.toString());
             itemMeta.getPersistentDataContainer().set(BYTES_USED_KEY, PersistentDataType.INTEGER, bytesUsed);
+
+            itemMeta.setMaxStackSize(1);
 
             itemStack.setItemMeta(itemMeta);
         }
