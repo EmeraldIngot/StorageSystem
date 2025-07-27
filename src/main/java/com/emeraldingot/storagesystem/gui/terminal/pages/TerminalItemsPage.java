@@ -48,7 +48,8 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         int pageCount = getPageCount(cellItems);
 
         // first page is index 0, add 1 to look correct in the UI
-        Inventory inventory = Bukkit.createInventory(new StorageSystemHolder(storageCellData), 54, (pageNumber + 1) + "/" + pageCount);
+        String title = Language.STORAGE_SYSTEM_TITLE + " (" + (pageNumber + 1) + "/" + pageCount + ")";
+        Inventory inventory = Bukkit.createInventory(new StorageSystemHolder(storageCellData), 54, title);
 
         ItemStack spacer = new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
         ItemMeta spacerMeta = spacer.getItemMeta();

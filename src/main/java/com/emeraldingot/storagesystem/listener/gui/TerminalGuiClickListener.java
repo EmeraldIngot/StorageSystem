@@ -160,7 +160,6 @@ public class TerminalGuiClickListener implements Listener {
             }
 
 
-
         }
 
         if (event.getClickedInventory() == event.getView().getBottomInventory()) {
@@ -178,6 +177,7 @@ public class TerminalGuiClickListener implements Listener {
                     event.setCancelled(true);
                     return;
                 }
+
 
                 addToCell(storageCellData, addedStack);
             }

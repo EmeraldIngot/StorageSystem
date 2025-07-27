@@ -58,8 +58,6 @@ public class StorageSystem extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new BlockDispenseListener(), this);
         getServer().getPluginManager().registerEvents(new TerminalInteractListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
-        getServer().getPluginManager().registerEvents(new CloseInventoryListener(), this);
-        getServer().getPluginManager().registerEvents(new OpenInventoryListener(), this);
 
         getServer().getPluginManager().registerEvents(new TerminalGuiClickListener(), this);
         getServer().getPluginManager().registerEvents(new TerminalGuiCloseListener(), this);
