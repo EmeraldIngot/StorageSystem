@@ -15,6 +15,10 @@ public class StorageControllerOpenListener implements Listener {
             return;
         }
 
+        if (event.getInventory().getLocation() == null) {
+            return;
+        }
+
         // Extra check just in case
         if (!StorageControllerBlock.isStorageController(event.getInventory().getLocation())) {
             return;
