@@ -13,6 +13,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SuspiciousStewMeta;
@@ -65,13 +66,18 @@ public class ControllerManager {
 
     public boolean isOnline(Location location) {
         Dispenser dispenser = (Dispenser) location.getBlock().getState();
+        Inventory inventory =  dispenser.getInventory();
 
-        if (dispenser.getInventory().getItem(4) == null) {
+        if (inventory.getItem(4) == null) {
             return false;
         }
-        else {
-            return true;
+
+        if (!StorageCell.isStorageCell(inventory.getItem(4))) {
+            return false;
         }
+
+        return true;
+
     }
 
     public UUID getID(Location location) {

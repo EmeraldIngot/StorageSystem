@@ -11,9 +11,13 @@ public class Language {
     public static final String STORAGE_SYSTEM_TITLE = "Storage System";
     public static final String STORAGE_SYSTEM_ITEMS_TITLE = ChatColor.RED + "StorageSystem Items";
     public static final String STORAGE_SYSTEM_LORE_TAG = ChatColor.DARK_GRAY + "StorageSystem";
-    public static final String NO_CONTROLLER_MESSAGE = ChatColor.DARK_RED + "" + ChatColor.BOLD + "StorageSystem " + ChatColor.RESET + "" + ChatColor.RED + "No unoccupied online storage controllers found nearby";
+    public static final String NO_PAIRED_CONTROLLER_MESSAGE = ChatColor.DARK_RED + "" + ChatColor.BOLD + "StorageSystem " + ChatColor.RESET + "" + ChatColor.RED + "You must pair this terminal with a controller first!";
     public static final String FIRST_PAGE = ChatColor.RED + "First Page";
     public static final String PREVIOUS_PAGE = ChatColor.RED + "Previous Page";
     public static final String NEXT_PAGE = ChatColor.RED + "Next Page";
     public static final String LAST_PAGE = ChatColor.RED + "Last Page";
+    public static final String REMOVED_CONTROLLER_MESSAGE = ChatColor.DARK_RED + "" + ChatColor.BOLD + "StorageSystem " + ChatColor.RESET + "" + ChatColor.RED + "The paired controller no longer exists!";
+    public static final String PAIRED_CONTROLLER_OFFLINE_MESSAGE = ChatColor.DARK_RED + "" + ChatColor.BOLD + "StorageSystem " + ChatColor.RESET + "" + ChatColor.RED + "The paired controller is offline!";
+    public static final String PAIRED_WITH_CONTROLLER_MESSAGE = ChatColor.DARK_AQUA + "" + ChatColor.BOLD + "StorageSystem " + ChatColor.RESET + "" + ChatColor.AQUA + "Successfully paired with controller!";
+    public static final String PAIRED_CONTROLLER_RANGE_MESSAGE = ChatColor.DARK_RED + "" + ChatColor.BOLD + "StorageSystem " + ChatColor.RESET + "" + ChatColor.RED + "The paired controller is too far away!";
 }
