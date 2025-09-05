@@ -26,6 +26,9 @@ public class TerminalInteractListener implements Listener {
     @EventHandler
     public void onPlayerNormalInteract(PlayerInteractEvent event)  {
 //        System.out.println("test");
+        if (event.getHand() == null) {
+            return;
+        }
 
         if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
@@ -129,6 +132,9 @@ public class TerminalInteractListener implements Listener {
     @EventHandler
     public void onPlayerSneakInteract(PlayerInteractEvent event) {
 //        System.out.println("test");
+        if (event.getHand() == null) {
+            return;
+        }
 
         if (event.getHand().equals(EquipmentSlot.OFF_HAND)) {
             return;
