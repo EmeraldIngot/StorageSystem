@@ -132,6 +132,11 @@ public class StorageControllerBlock {
     public static boolean isLegacyBlock(Inventory inventory) {
 
         ItemStack spacer = inventory.getItem(0);
+
+        if (spacer == null) {
+            return false;
+        }
+
         if (spacer.getItemMeta() == null) {
             return false;
         }
