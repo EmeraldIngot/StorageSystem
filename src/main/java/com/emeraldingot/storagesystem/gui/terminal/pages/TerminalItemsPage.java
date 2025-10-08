@@ -96,7 +96,7 @@ public class TerminalItemsPage extends AbstractTerminalPage {
         for (ItemStack itemStack : itemStacks) {
 
             int amount = itemStack.getAmount();
-            int stackCount = (int) Math.ceil(amount / 64d);
+            int stackCount = (int) Math.ceil(amount / (double)itemStack.getMaxStackSize());
 
             totalStackCount += stackCount;
 
