@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class StorageCell64K extends StorageCell {
 
-    private static final int SIZE = 16 * 1024;
+    private static final int SIZE = 64 * 1024;
 
     @Override
     public ItemStack getStack(int filledBytes, UUID uuid)  {
